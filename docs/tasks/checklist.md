@@ -58,10 +58,11 @@ Phần test cần đủ để minh họa **kỹ nghệ harness và CI/CD**, khô
 | **E-03** | [ ] Chạy **ít nhất 10 lần độc lập**, lưu commit SHA, thời gian, kết quả, run URL, raw log và retry history | Vỹ; Dương hỗ trợ CI | Bảng 10 run kèm nguồn gốc từng run |
 | **E-04** | [ ] Phân tích thủ công **trước khi xem kết quả AI**; ghi thời gian, giả thuyết, dòng log hỗ trợ, bước kiểm tra | Vượng | Bản manual triage có dấu thời gian |
 | **E-05** | [ ] Chuẩn hóa dữ liệu đưa cho ChatGPT: cùng log và lịch sử chạy; loại bí mật/thông tin cá nhân | Vỹ | Input và prompt được lưu nguyên bản |
-| **E-06** | [ ] Thử prompt có cấu trúc: tối đa 3 giả thuyết, dẫn chứng chính xác, 3 bước kiểm tra, nêu mức độ chưa chắc chắn | Vỹ | Prompt và output nguyên bản |
-| **E-07** | [ ] So sánh người và AI theo cùng rubric: root cause, bằng chứng, bước tiếp theo, thời gian, suy diễn/hallucination | Vỹ; Vượng review | Báo cáo `AI_vs_Human_Triage` |
-| **E-08** | [ ] Sửa flake và chạy lại để xác nhận nguyên nhân, không dừng ở phỏng đoán từ log | Vỹ | Commit sửa và run xác nhận |
-| **E-09** | [ ] Rút ra ít nhất **3 failure modes thực tế** của AI và biện pháp kiểm chứng | Vỹ | Ví dụ gắn với output/log thật |
+| **E-06**| [ ] Tìm kiếm và đề xuất 1 prompt patterns / SKILLS phân tích log CI từ Github repo, diễn đàn DevOps hoặc bài báo học thuật để chọn ra kỹ thuật tối ưu nhất (ví dụ: Chain-of-Thought, Few-Shot Prompting) | Vỹ, Vượng, Dương / prompt/SKILLS| Báo cáo `AI_vs_Human_Triage` |.
+| **E-07** | [ ] Thử và đánh giá 3 prompt patterns /SKILLS đã được tìm kiếm ở E-06a: tối đa 3 giả thuyết, dẫn chứng chính xác, 3 bước kiểm tra, nêu mức độ chưa chắc chắn | Vỹ | Prompt và output nguyên bản |
+| **E-08** | [ ] So sánh người và AI theo cùng rubric: root cause, bằng chứng, bước tiếp theo, thời gian, suy diễn/hallucination | Vỹ; Vượng review | Báo cáo `AI_vs_Human_Triage` |
+| **E-09** | [ ] Sửa flake và chạy lại để xác nhận nguyên nhân, không dừng ở phỏng đoán từ log | Vỹ | Commit sửa và run xác nhận |
+| **E-10** | [ ] Rút ra ít nhất **3 failure modes thực tế** của AI và biện pháp kiểm chứng | Vỹ | Ví dụ gắn với output/log thật |
 
 Brief T07 yêu cầu workflow, coverage XML, branch protection, thí nghiệm 10 lần và so sánh AI với người; demo trực tiếp phải dùng cả công cụ truyền thống lẫn AI. :codex-file-citation{path="D:\Workspace\SoftwareTesting\MySeminar\T07_CI-CD_and_Test-Harness_Engineering.docx.md" purpose="source"}
 

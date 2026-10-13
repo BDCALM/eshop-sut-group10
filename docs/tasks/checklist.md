@@ -18,11 +18,11 @@ Dưới đây là checklist để hoàn thiện **toàn bộ T07**. Mình phân 
 
 | Mã Task | Checklist | Người thực hiện | Bằng chứng hoàn thành |
 |:---:|---|---|---|
-| **B-01** | [ ] Kiểm kê EShop: cách cài, build, chạy backend, database/mock, test hiện có và lệnh chạy được từ máy sạch | Vỹ | README kỹ thuật và kết quả chạy local |
-| **B-02** | [ ] Viết hoặc hoàn thiện **unit test, API test, smoke test** cho vài luồng đại diện; nêu rõ lý do chọn luồng | Vỹ; Dương review | Test code, kết quả chạy và bảng ánh xạ test → chức năng |
-| **B-03** | [ ] Thiết lập fixture/seed/mock, setup và cleanup để test độc lập, có thể lặp lại | Vỹ | Chạy lại nhiều lần không phụ thuộc thứ tự test |
-| **B-04** | [ ] Chuẩn hóa lệnh `lint`, `build`, `test` và tạo coverage XML; không dùng lệnh giả chỉ để pipeline xanh | Vỹ | Các lệnh chạy thành công từ clone sạch |
-| **B-05** | [ ] Vẽ sơ đồ harness: nguồn test, fixture, runner, artefact, log và quality gate | Dương; Vỹ review | Sơ đồ dùng được trong guide và slide |
+| **B-01** | [x] Kiểm kê EShop: cách cài, build, chạy backend, database/mock, test hiện có và lệnh chạy được từ máy sạch | Vỹ | [Hướng dẫn kỹ thuật](../../setup_guide.md), [log chạy local](../evidence/B-01/local-verification.log). Đã kiểm chứng bản sao sạch ngày 2026-10-13. |
+| **B-02** | [x] Viết hoặc hoàn thiện **unit test, API test, smoke test** cho vài luồng đại diện; nêu rõ lý do chọn luồng | Vỹ; Dương review | [Test code và bảng ánh xạ](../../backend/tests/README.md), [log chạy](../evidence/B-02/test-run.log): 36 test, 26 pass, 10 fail do SUT không thỏa đặc tả. |
+| **B-03** | [x] Thiết lập fixture/seed/mock, setup và cleanup để test độc lập, có thể lặp lại | Vỹ | [Hướng dẫn fixture và lệnh chạy](../../backend/tests/README.md), [log kiểm chứng](../evidence/B-03/isolation.log): 3 seed, cùng kết quả từng test; database gốc không đổi, không có handle mở. |
+| **B-04** | [x] Chuẩn hóa lệnh `lint`, `build`, `test` và tạo coverage XML; không dùng lệnh giả chỉ để pipeline xanh | Vỹ | [Hướng dẫn](../../backend/tests/README.md), [log clone sạch](../evidence/B-04/clean-clone.log), [coverage XML](../evidence/B-04/cobertura-coverage.xml). Đã kiểm chứng từ clone sạch: cài đặt/lint/build pass; test 29 pass/10 fail; coverage XML sinh thành công. |
+| **B-05** | [x] Vẽ sơ đồ harness: nguồn test, fixture, runner, artefact, log và quality gate | Dương; Vỹ review | [Sơ đồ và luồng chi tiết](../architecture/test-harness.md), [SVG cho slide](../architecture/assets/test-harness-overview.svg), [PNG cho guide/slide](../architecture/assets/test-harness-overview.png). Có nhánh unit/API, setup/cleanup, kết quả fail, report và quality gate. |
 
 Phần test cần đủ để minh họa **kỹ nghệ harness và CI/CD**, không cần phủ toàn bộ tính năng EShop. Ghi chú nội bộ của nhóm cũng đặt trọng tâm ở CI/CD, DevOps và cách dùng AI để phân tích log. :codex-file-citation{path="D:\Workspace\SoftwareTesting\MySeminar\Personal notes - Seminar.docx" purpose="source"}
 

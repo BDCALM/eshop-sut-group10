@@ -1,0 +1,78 @@
+B-03 fixture and isolation verification
+Date: 2026-10-13; timezone Asia/Bangkok (+07:00)
+Environment: Windows, PowerShell, Node.js v24.14.0, npm 11.21.0
+Source: uncommitted B-03 working tree based on ec6d7bf
+COMMAND: npm run test:harness
+
+> backend@1.0.0 test:harness
+> jest --runInBand tests/harness
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.658 s, estimated 1 s
+Ran all test suites matching tests/harness.
+EXIT CODE: 0
+COMMAND: npm run test:isolation
+
+> backend@1.0.0 test:isolation
+> node scripts/verify-isolation.cjs
+
+B-03: verify repeated runs and randomized test order
+Production database SHA256 before: c63f00544180ba1fbb1427a9b9dd3f1784842698809972f33ce90482e7420ba6
+seed=101 tests=39 pass=29 fail=10 jestExit=1 stable=true expectedFailures=true openHandles=0
+seed=202 tests=39 pass=29 fail=10 jestExit=1 stable=true expectedFailures=true openHandles=0
+seed=303 tests=39 pass=29 fail=10 jestExit=1 stable=true expectedFailures=true openHandles=0
+Production database SHA256 after: c63f00544180ba1fbb1427a9b9dd3f1784842698809972f33ce90482e7420ba6
+B-03 isolation verification: PASS
+EXIT CODE: 0

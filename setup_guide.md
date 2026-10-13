@@ -54,7 +54,7 @@ Server chạy tại `http://localhost:3000`. Port 3000 đang được khai báo 
 - Dữ liệu mẫu: 2 người dùng, 5 sản phẩm, 3 danh mục, 4 coupon; chưa có đơn hàng hoặc lượt sử dụng coupon.
 - Coupon mẫu: `SAVE10`, `BIGBUY`, `VIP100`, `EXPIRED`.
 - Giỏ hàng nằm trong biến `userCarts` ở bộ nhớ server; khởi động lại sẽ mất giỏ hàng.
-- Chưa có database riêng cho test, fixture/mock hoặc quy trình setup/cleanup kiểm thử. Các phần này thuộc B-03.
+- Bộ test B-02 dùng SQLite trong bộ nhớ và seed thật qua helper Jest, tách biệt file dữ liệu của ứng dụng. Việc hoàn thiện fixture/mock và quy trình setup/cleanup thuộc B-03.
 
 Không cần chạy `node database.js` trước `node server.js`. Lệnh này cũng reset dữ liệu, trong khi server đã thực hiện cùng việc khi khởi động. Module không đóng kết nối SQLite, nên lệnh seed riêng có thể tiếp tục chạy thay vì tự kết thúc.
 
@@ -137,7 +137,7 @@ Expo cảnh báo phiên bản cài đặt `expo@54.0.34`, phiên bản mong đ�
 
 | Thành phần | Lint | Build | Test tự động |
 | --- | --- | --- | --- |
-| Backend | Chưa có script | Chưa có script; chạy JavaScript trực tiếp | `npm test` là placeholder trả lỗi |
+| Backend | Chưa có script | Chưa có script; chạy JavaScript trực tiếp | Jest: `npm test`, `test:unit`, `test:api`, `test:smoke` |
 | Web khách hàng | `npm run lint` | `npm run build` | Chưa cấu hình script/framework test |
 | Web quản trị | `npm run lint` | `npm run build` | Chưa cấu hình script/framework test |
 | Mobile | Chưa có script | Chưa có script build | Chưa cấu hình script/framework test |
@@ -153,7 +153,19 @@ node --check database.js
 
 `backend/test_profile.js` là script gọi thử API: tạo JWT, in phản hồi, không có assertion và không được nối vào `npm test`. Trên bản cài sạch, script lỗi `Cannot find module 'axios'` vì backend chưa khai báo dependency này. Script không được tính là bộ test tự động; không công khai JWT mà nó in ra.
 
-Chưa thấy cấu hình Jest, bộ unit/API/smoke test, coverage hoặc fixture/mock kiểm thử trong mã nguồn được kiểm kê. B-02 bổ sung test đại diện, B-03 bổ sung cô lập dữ liệu và setup/cleanup, B-04 chuẩn hóa lint/build/test và coverage XML.
+B-01 ghi nhận chưa có bộ test tự động. B-02 đã bổ sung Jest, unit/API/smoke test đại diện và cơ chế database trong bộ nhớ tối thiểu. Xem [hướng dẫn và bảng ánh xạ test](backend/tests/README.md). B-03 tiếp tục hoàn thiện fixture/setup/cleanup; B-04 phụ trách chuẩn hóa lint/build/test và coverage XML.
+
+Chạy bộ test từ thư mục `backend`, không cần khởi động server:
+
+```powershell
+npm ci
+npm test
+npm run test:unit
+npm run test:api
+npm run test:smoke
+```
+
+Các lệnh test trả mã lỗi khi assertion không đạt. Những lỗi nghiệp vụ phát hiện trong B-02 được giữ nguyên trong kết quả kiểm thử.
 
 `run_servers.sh` dùng đường dẫn tuyệt đối trên máy macOS của tác giả và `killall node`. Script chưa dùng được nguyên bản trên Windows và có thể dừng tiến trình Node không thuộc dự án. Dùng các terminal và lệnh riêng trong hướng dẫn này.
 

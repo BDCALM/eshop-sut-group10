@@ -137,7 +137,7 @@ Expo cảnh báo phiên bản cài đặt `expo@54.0.34`, phiên bản mong đ�
 
 | Thành phần | Lint | Build | Test tự động |
 | --- | --- | --- | --- |
-| Backend | Chưa có script | Chưa có script; chạy JavaScript trực tiếp | Jest: `npm test`, `test:unit`, `test:api`, `test:smoke` |
+| Backend | `npm run lint` | `npm run build`: kiểm tra cú pháp JavaScript | Jest: `npm test`, các lệnh theo tầng và coverage |
 | Web khách hàng | `npm run lint` | `npm run build` | Chưa cấu hình script/framework test |
 | Web quản trị | `npm run lint` | `npm run build` | Chưa cấu hình script/framework test |
 | Mobile | Chưa có script | Chưa có script build | Chưa cấu hình script/framework test |
@@ -153,17 +153,24 @@ node --check database.js
 
 `backend/test_profile.js` là script gọi thử API: tạo JWT, in phản hồi, không có assertion và không được nối vào `npm test`. Trên bản cài sạch, script lỗi `Cannot find module 'axios'` vì backend chưa khai báo dependency này. Script không được tính là bộ test tự động; không công khai JWT mà nó in ra.
 
-B-01 ghi nhận chưa có bộ test tự động. B-02 bổ sung Jest và unit/API/smoke test đại diện; B-03 bổ sung fixture, setup/cleanup và lệnh kiểm tra tính độc lập. Xem [hướng dẫn và bảng ánh xạ test](backend/tests/README.md). B-04 phụ trách chuẩn hóa lint/build/test và coverage XML.
+B-01 ghi nhận chưa có bộ test tự động. B-02 bổ sung Jest và unit/API/smoke test đại diện; B-03 bổ sung fixture, setup/cleanup và lệnh kiểm tra tính độc lập. B-04 bổ sung ESLint, kiểm tra cú pháp toàn bộ nguồn backend và coverage XML. Xem [hướng dẫn, bảng ánh xạ và quy trình B-04](backend/tests/README.md).
 
 Chạy bộ test từ thư mục `backend`, không cần khởi động server:
 
 ```powershell
 npm ci
+npm run lint
+npm run build
 npm test
 npm run test:unit
 npm run test:api
 npm run test:smoke
+npm run test:coverage
 ```
+
+Backend chạy JavaScript trực tiếp nên `build` không tạo bundle hoặc thư mục `dist`; nó dùng parser Node.js kiểm tra các file `.js`/`.cjs` trong backend, gồm nguồn ứng dụng, script, cấu hình và test. Lệnh này không mở server hoặc database.
+
+`test:coverage` tạo `backend/coverage/cobertura-coverage.xml` và `coverage-summary.json`. `test:ci` chạy toàn bộ test với coverage ở chế độ Jest CI. Report được sinh cả khi assertion nghiệp vụ fail; exit code của test vẫn là 1 khi có lỗi.
 
 Các lệnh test trả mã lỗi khi assertion không đạt. Những lỗi nghiệp vụ phát hiện trong B-02 được giữ nguyên trong kết quả kiểm thử.
 

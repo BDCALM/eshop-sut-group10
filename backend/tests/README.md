@@ -1,4 +1,4 @@
-# Bộ kiểm thử và hướng dẫn chạy EShop — B-02/B-03
+# Bộ kiểm thử và hướng dẫn chạy EShop — B-02/B-03/B-04
 
 ## Phạm vi và lý do chọn
 
@@ -125,3 +125,51 @@ npm test -- --randomize --seed=202 --showSeed --detectOpenHandles
 Kết quả B-03: mỗi lần **39 test, 29 pass, 10 fail**, trong đó ba test harness mới pass. Các lỗi SUT giữ nguyên từ B-02. `test:isolation` exit 0 chỉ xác nhận tính ổn định và cô lập theo phép kiểm tra này; nó không làm `npm test` pass, không thay quality gate và không chứng minh độc lập với mọi thứ tự có thể có. Khi bổ sung test hoặc sửa bug SUT, cập nhật số lượng/danh sách lỗi baseline trong `scripts/verify-isolation.cjs` dựa trên kết quả được xác minh.
 
 Bằng chứng: [log B-03](../../docs/evidence/B-03/isolation.log). Thay đổi được chạy trên nền commit B-02 `ec6d7bf`, chưa commit tại thời điểm kiểm chứng. Các bước trên cho phép thành viên tự chạy lại trên máy của mình mà không cần database hoặc server của người viết test.
+
+## B-04: lint, build, test và coverage XML
+
+Chạy trong `backend` sau khi clone và cài Node/npm phù hợp với [hướng dẫn môi trường](../../setup_guide.md):
+
+```powershell
+npm ci
+npm run lint
+npm run build
+npm test
+npm run test:coverage
+```
+
+Các lệnh có trách nhiệm riêng:
+
+| Lệnh | Kiểm tra / đầu ra | Khi thất bại |
+| --- | --- | --- |
+| `lint` | ESLint recommended cho ứng dụng, scripts, cấu hình và tests; khai báo môi trường Node/Jest rõ ràng | Exit code khác 0 nếu có lỗi hoặc warning |
+| `build` | `node --check` cho mọi file `.js`/`.cjs` ngoài thư mục dependency/report | Exit code 1 nếu có lỗi cú pháp |
+| `test` | Toàn bộ unit/API/smoke/harness test | Exit code 1 khi assertion fail |
+| `test:coverage` | Toàn bộ test và report coverage | Giữ exit code fail, vẫn sinh coverage |
+| `test:ci` | Jest `--ci`, toàn bộ test và report coverage | Giữ exit code fail, không dùng forceExit/skip |
+
+Backend là CommonJS chạy trực tiếp, không có bước transpile/bundle. Vì vậy, `build` là kiểm tra cú pháp thật bằng parser Node, không sinh `dist`, không cài dependency và không chạy ứng dụng/database. Nó không chứng minh chương trình đúng nghiệp vụ hoặc không có lỗi runtime. Web/admin vẫn có build Vite và lint riêng; B-04 này chuẩn hóa backend theo phạm vi seminar T07.
+
+Coverage đo `server.js` và `database.js`, bao gồm cả code chưa được test gọi. Không tính helper/test vào tỷ lệ của SUT và không đặt ngưỡng tùy ý khi đề chưa quy định. Report gồm:
+
+- `coverage/cobertura-coverage.xml`: Cobertura XML để hệ thống CI đọc/upload.
+- `coverage/coverage-summary.json`: số liệu máy đọc được cho badge/tổng hợp.
+- Bảng summary trong terminal/log.
+
+Các file trong `coverage/` là output tự sinh, được Git ignore. Muốn tái lập trên clone sạch hoặc thu artefact CI, dùng:
+
+```powershell
+cd backend
+npm ci
+npm run lint
+npm run build
+npm run test:ci
+```
+
+Chạy từng lệnh hoặc dùng các bước CI riêng để lưu được kết quả từng bước. Test lỗi vẫn phải giữ exit code lỗi; bước upload report của CI cần chạy cả khi test fail. Không thay `test:ci` bằng `test:isolation`: isolation pass chỉ xác nhận tính ổn định, không xác nhận các yêu cầu nghiệp vụ pass.
+
+Bằng chứng B-04: [log clone sạch](../../docs/evidence/B-04/clean-clone.log), [coverage XML của lần chạy](../../docs/evidence/B-04/cobertura-coverage.xml). B-04 đã hoàn thành việc chuẩn hóa lệnh, kiểm chứng trên clone sạch và tạo coverage XML. Bộ test ghi nhận mười lỗi SUT đã mô tả trong B-02.
+
+Kiểm chứng trên clone local sạch của commit triển khai `a7f0923`, không có sẵn dependency/report. `npm ci`, lint và build exit 0; `npm test` và `test:ci` exit 1 với đúng 39 test, 29 pass, 10 fail. `test:isolation` exit 0, không có handle mở. Line coverage 61,48%; statement 57,98%; function 39,72%; branch 39,09%. Coverage là mức độ thực thi code, không phải tỷ lệ yêu cầu nghiệp vụ đã đúng.
+
+Một file sai cú pháp được tạo riêng trong clone để xác nhận lint/build thực sự từ chối nguồn lỗi; cả hai trả exit 1, sau đó file được xóa. Clone giữ working tree sạch. Snapshot XML trong thư mục bằng chứng chỉ chuẩn hóa đường dẫn nguồn thành `backend`, giữ nguyên counters; report sinh trực tiếp của lần chạy nằm trong `coverage/` của clone. Chưa có lần chạy trên GitHub Actions/Jenkins trong phạm vi B-04.

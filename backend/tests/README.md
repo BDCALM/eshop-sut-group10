@@ -1,4 +1,4 @@
-# Bộ kiểm thử và hướng dẫn chạy EShop — B-02/B-03/B-04
+# Bộ kiểm thử và hướng dẫn chạy EShop — B-02–B-05
 
 ## Phạm vi và lý do chọn
 
@@ -173,3 +173,11 @@ Bằng chứng B-04: [log clone sạch](../../docs/evidence/B-04/clean-clone.log
 Kiểm chứng trên clone local sạch của commit triển khai `a7f0923`, không có sẵn dependency/report. `npm ci`, lint và build exit 0; `npm test` và `test:ci` exit 1 với đúng 39 test, 29 pass, 10 fail. `test:isolation` exit 0, không có handle mở. Line coverage 61,48%; statement 57,98%; function 39,72%; branch 39,09%. Coverage là mức độ thực thi code, không phải tỷ lệ yêu cầu nghiệp vụ đã đúng.
 
 Một file sai cú pháp được tạo riêng trong clone để xác nhận lint/build thực sự từ chối nguồn lỗi; cả hai trả exit 1, sau đó file được xóa. Clone giữ working tree sạch. Snapshot XML trong thư mục bằng chứng chỉ chuẩn hóa đường dẫn nguồn thành `backend`, giữ nguyên counters; report sinh trực tiếp của lần chạy nằm trong `coverage/` của clone. Chưa có lần chạy trên GitHub Actions/Jenkins trong phạm vi B-04.
+
+## B-05: sơ đồ harness
+
+![Sơ đồ test harness EShop](../../docs/architecture/assets/test-harness-overview.png)
+
+[Luồng chi tiết, quality gate và trường hợp biên](../../docs/architecture/test-harness.md) · [SVG dùng cho slide](../../docs/architecture/assets/test-harness-overview.svg).
+
+Sơ đồ phân biệt đường unit không dùng database với đường API/smoke/harness dùng fixture riêng; log và coverage với verdict test; diagnostic isolation với quality gate. Phần upload artefact/status check/branch protection được ghi rõ là CI tiếp theo, không phải thành phần đã cấu hình.

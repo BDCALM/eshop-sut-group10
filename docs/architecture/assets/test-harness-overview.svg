@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<title>Kiến trúc test harness EShop</title>
+<desc>Nguồn test, Jest runner, fixture và SUT, assertions, log, coverage và quality gate. CI là phần tiếp theo.</desc>
+<rect width="1920" height="1080" fill="#f8fafc"/>
+<text x="68" y="89" fill="#0f172a" font-family="Arial, sans-serif" font-size="48" font-weight="700">EShop · Kiến trúc test harness</text>
+<text x="68" y="137" fill="#334155" font-family="Arial, sans-serif" font-size="26" font-weight="400">Backend đã triển khai B-02–B-04 · Luồng điều khiển và dữ liệu · B-05</text>
+<rect x="68" y="185" width="440" height="96" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="90" y="224" fill="#334155" font-family="Arial, sans-serif" font-size="27" font-weight="700">Chuẩn bị: npm ci</text>
+<text x="90" y="261" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">Lockfile, runtime, native SQLite</text>
+<rect x="558" y="185" width="535" height="96" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="580" y="224" fill="#334155" font-family="Arial, sans-serif" font-size="27" font-weight="700">Kiểm tra: npm run lint / build</text>
+<text x="580" y="261" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">Verdict riêng; không mở app / database</text>
+<rect x="1143" y="185" width="709" height="96" rx="16" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+<text x="1165" y="224" fill="#334155" font-family="Arial, sans-serif" font-size="27" font-weight="700">CI tiếp theo — chưa cấu hình</text>
+<text x="1165" y="261" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">GitHub Actions / Jenkins · upload · status check</text>
+<polyline points="509,233 556,233" fill="none" stroke="#64748b" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="556,233 543.0,227.0 543.0,239.0" fill="#64748b"/>
+<polyline points="1054,282 1054,308 1880,308 1880,745 1840,745 1840,772" fill="none" stroke="#64748b" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1840,772 1846.0,759.0 1834.0,759.0" fill="#64748b"/>
+<text x="1125" y="302" fill="#64748b" font-family="Arial, sans-serif" font-size="18" font-weight="400">verdict lint / build</text>
+<rect x="68" y="340" width="310" height="335" rx="16" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+<text x="91" y="388" fill="#1e40af" font-family="Arial, sans-serif" font-size="30" font-weight="700">Nguồn test</text>
+<text x="91" y="441" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">5 unit</text>
+<text x="91" y="478" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">30 API</text>
+<text x="91" y="515" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">1 smoke qua API</text>
+<text x="91" y="552" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">3 kiểm tra harness</text>
+<text x="91" y="612" fill="#334155" font-family="Arial, sans-serif" font-size="23" font-weight="700">README: expected</text>
+<text x="91" y="646" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">API spec: request</text>
+<rect x="438" y="340" width="320" height="335" rx="16" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+<text x="461" y="388" fill="#1e40af" font-family="Arial, sans-serif" font-size="30" font-weight="700">Jest runner</text>
+<text x="461" y="440" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">npm test / test:ci</text>
+<text x="461" y="477" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Chọn tầng bằng script</text>
+<text x="461" y="514" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">--runInBand</text>
+<text x="461" y="551" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Timeout mỗi test: 10 s</text>
+<text x="461" y="612" fill="#334155" font-family="Arial, sans-serif" font-size="23" font-weight="700">Diagnostic riêng</text>
+<text x="461" y="646" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">test:isolation → 3 run</text>
+<rect x="818" y="340" width="510" height="335" rx="16" fill="#ffffff" stroke="#6ee7b7" stroke-width="2"/>
+<text x="842" y="388" fill="#047857" font-family="Arial, sans-serif" font-size="30" font-weight="700">Fixture và SUT</text>
+<rect x="840" y="415" width="466" height="86" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+<text x="857" y="445" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="700">Unit → middleware JWT thật</text>
+<text x="857" y="482" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">Stub req/res/next; không mở SQLite</text>
+<rect x="840" y="523" width="466" height="130" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+<text x="857" y="553" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="700">API / smoke / harness</text>
+<text x="857" y="590" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">App mới + SQLite :memory: + seed thật</text>
+<text x="857" y="624" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">Fixture → HTTP / Express / SQL thật</text>
+<rect x="1388" y="340" width="464" height="335" rx="16" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+<text x="1412" y="388" fill="#1e40af" font-family="Arial, sans-serif" font-size="30" font-weight="700">Assertions và kết quả</text>
+<text x="1412" y="440" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Jest so expected với actual</text>
+<text x="1412" y="477" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Hooks cleanup cho test có DB</text>
+<text x="1412" y="514" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Cleanup lỗi → failure</text>
+<text x="1412" y="551" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Exit 0 / 1 phản ánh kết quả</text>
+<text x="1412" y="612" fill="#334155" font-family="Arial, sans-serif" font-size="23" font-weight="700">Coverage khi bật reporter</text>
+<text x="1412" y="646" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="400">Crash / hủy: report không bảo đảm</text>
+<polyline points="380,496 435,496" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="435,496 422.0,490.0 422.0,502.0" fill="#2563eb"/>
+<polyline points="760,496 815,496" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="815,496 802.0,490.0 802.0,502.0" fill="#2563eb"/>
+<polyline points="1330,496 1385,496" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1385,496 1372.0,490.0 1372.0,502.0" fill="#2563eb"/>
+<rect x="68" y="775" width="960" height="216" rx="16" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+<text x="92" y="821" fill="#1e40af" font-family="Arial, sans-serif" font-size="30" font-weight="700">Log và artefact</text>
+<text x="92" y="865" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">stdout / stderr → lưu khi redirect; test ID + expected / actual</text>
+<text x="92" y="904" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">coverage/cobertura-coverage.xml + coverage-summary.json</text>
+<text x="92" y="943" fill="#334155" font-family="Arial, sans-serif" font-size="25" font-weight="400">Report JSON: tùy chọn --json --outputFile; không tự có</text>
+<rect x="1090" y="775" width="762" height="216" rx="16" fill="#ffffff" stroke="#fbbf24" stroke-width="2"/>
+<text x="1114" y="821" fill="#92400e" font-family="Arial, sans-serif" font-size="30" font-weight="700">Quality gate</text>
+<text x="1114" y="864" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Đọc exit code từng bước; giữ test fail đúng trạng thái</text>
+<text x="1114" y="903" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">Artefact không đổi verdict; isolation không thay full test</text>
+<text x="1114" y="942" fill="#334155" font-family="Arial, sans-serif" font-size="24" font-weight="400">CI status check / branch protection: phần tiếp theo</text>
+<polyline points="1510,677 1510,711 520,711 520,772" fill="none" stroke="#64748b" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="520,772 526.0,759.0 514.0,759.0" fill="#64748b"/>
+<text x="769" y="705" fill="#475569" font-family="Arial, sans-serif" font-size="20" font-weight="400">Log khi chạy; coverage nếu runner hoàn tất</text>
+<polyline points="1750,677 1750,745 1470,745 1470,772" fill="none" stroke="#64748b" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1470,772 1476.0,759.0 1464.0,759.0" fill="#64748b"/>
+<text x="1510" y="735" fill="#475569" font-family="Arial, sans-serif" font-size="20" font-weight="400">exit code</text>
+<text x="68" y="1039" fill="#0f172a" font-family="Arial, sans-serif" font-size="24" font-weight="700">Fixture mới cho mỗi test · DB gốc giữ nguyên · Không tự đổi assertion để làm xanh kết quả</text>
+</svg>

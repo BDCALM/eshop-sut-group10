@@ -174,6 +174,8 @@ Backend chạy JavaScript trực tiếp nên `build` không tạo bundle hoặc 
 
 Các lệnh test trả mã lỗi khi assertion không đạt. Những lỗi nghiệp vụ phát hiện trong B-02 được giữ nguyên trong kết quả kiểm thử.
 
+Xem [sơ đồ harness và các nhánh lỗi](docs/architecture/test-harness.md) để hiểu cách nguồn test, fixture, runner, log/coverage và quality gate kết nối với nhau.
+
 `run_servers.sh` dùng đường dẫn tuyệt đối trên máy macOS của tác giả và `killall node`. Script chưa dùng được nguyên bản trên Windows và có thể dừng tiến trình Node không thuộc dự án. Dùng các terminal và lệnh riêng trong hướng dẫn này.
 
 ## 6. Kết quả kiểm chứng B-01

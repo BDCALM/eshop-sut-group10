@@ -52,8 +52,7 @@ describe('API: coupon conditions and formulas (FR-09)', () => {
   });
 
   test('A-COUPON-08 rejects a coupon whose per-user limit is exhausted (C5)', async () => {
-    const coupon = await harness.get('SELECT id FROM coupons WHERE code = ?', ['BIGBUY']);
-    await harness.run('INSERT INTO coupon_usage (coupon_id, user_id) VALUES (?, ?)', [coupon.id, user.id]);
+    await harness.exhaustCoupon('BIGBUY', user.id);
     expectClientError(await apply('BIGBUY', 600000));
   });
 

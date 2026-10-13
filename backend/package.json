@@ -7,7 +7,9 @@
     "test": "jest --runInBand",
     "test:unit": "jest --runInBand tests/unit",
     "test:api": "jest --runInBand tests/api",
-    "test:smoke": "jest --runInBand tests/smoke"
+    "test:smoke": "jest --runInBand tests/smoke",
+    "test:harness": "jest --runInBand tests/harness",
+    "test:isolation": "node scripts/verify-isolation.cjs"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,4 @@
-# Bộ kiểm thử đại diện EShop — B-02
+# Bộ kiểm thử và hướng dẫn chạy EShop — B-02/B-03
 
 ## Phạm vi và lý do chọn
 
@@ -32,7 +32,7 @@ Jest chạy tuần tự bằng `--runInBand`. Không cần chạy backend hoặc
 
 Helper `helpers/harness.js` thay constructor SQLite trong môi trường Jest để mở `:memory:`. Mỗi API/smoke test nạp một instance Express và database mới, chạy SQL tạo bảng/seed từ `database.js` thật, đợi dữ liệu sẵn sàng và đóng database sau test. Không mock phản hồi route hoặc công thức nghiệp vụ. Unit test mock module database vì middleware được kiểm tra không dùng database.
 
-`server.js` chỉ mở port 3000 khi chạy trực tiếp; khi import, nó export `app` và `authenticateToken` cho test. Các handler nghiệp vụ không bị sửa trong B-02. Cơ chế cô lập tối thiểu này cần thiết để test an toàn; B-03 vẫn phụ trách hoàn thiện fixture/reset/mock và kiểm chứng tính độc lập theo kế hoạch nhóm.
+`server.js` chỉ mở port 3000 khi chạy trực tiếp; khi import, nó export `app` và `authenticateToken` cho test. Các handler nghiệp vụ không bị sửa trong B-02/B-03.
 
 ## Bảng ánh xạ test → chức năng → kết quả
 
@@ -88,3 +88,40 @@ Mười fail là các assertion nghiệp vụ không thỏa trên SUT hiện t�
 Bằng chứng: [log chạy B-02](../../docs/evidence/B-02/test-run.log). Log có tên test, expected/actual và kết quả runner. Mã được kiểm chứng gồm thay đổi B-02 trên nền commit B-01 `77e1870`; thay đổi B-02 chưa commit tại thời điểm chạy.
 
 Reviewer theo checklist: Dương. AI hỗ trợ thiết kế test, triển khai harness và đọc kết quả. Không ghi nhận peer review hoặc phân tích thủ công độc lập chưa diễn ra.
+
+## B-03: fixture, setup, cleanup và tính độc lập
+
+Mỗi test cần dữ liệu sử dụng `beforeEach` để tạo harness mới và `afterEach` để đóng nó. `createHarness()` đợi seed sẵn sàng và kiểm tra số lượng cả sáu bảng trước khi trả về; SQL/HTTP fixture chỉ được gọi sau bước này. `close()` gọi nhiều lần vẫn dùng cùng kết quả cleanup. Nếu lỗi trong setup, helper đóng kết nối đã mở và khôi phục mock constructor SQLite. Mock chỉ đổi nơi lưu SQLite sang bộ nhớ; SQL tạo bảng/seed, route, JWT và công thức SUT vẫn chạy thật.
+
+Các fixture dùng chung nằm trong `tests/helpers/harness.js`:
+
+| Helper | Cách sử dụng | Tác dụng |
+| --- | --- | --- |
+| `createHarness()` | `const h = await createHarness()` | App và database mới, seed sạch |
+| `h.login(role)` | `await h.login('user')` hoặc `'admin'` | Đăng nhập bằng tài khoản seed, trả id/token |
+| `h.product()` | `await h.product()` | Tìm sản phẩm fixture theo tên, không dựa vào ID hardcode |
+| `h.order(userId, status)` | `await h.order(user.id, 'shipping')` | Tạo đơn có trạng thái phục vụ test |
+| `h.exhaustCoupon(code, userId)` | `await h.exhaustCoupon('BIGBUY', user.id)` | Ghi đủ số lượt dùng theo giới hạn của coupon |
+| `h.get(sql, params)` / `h.run(sql, params)` | Query có tham số | Chuẩn bị/kiểm tra trạng thái database của test |
+| `h.close()` | `await h.close()` trong teardown | Đóng database; không xóa database gốc |
+
+Không reset một instance đang dùng: test tiếp theo nhận instance mới, có giỏ hàng và database mới. Việc tạo fixture bằng SQL nhằm đưa SUT tới trạng thái đầu vào cần kiểm tra, không thay thế assertion cho chức năng đang được test. Không dùng `test.concurrent` với helper module isolation này.
+
+Chạy từ thư mục `backend`:
+
+```powershell
+npm run test:harness
+npm run test:isolation
+```
+
+`test:harness` chạy ba test H-ISOLATION-01/02/03: cô lập thay đổi database và coupon; cô lập giỏ hàng; cleanup nhiều lần. Các test này phải pass.
+
+`test:isolation` chạy toàn bộ bộ test ba lần, xáo thứ tự test trong mỗi file bằng seed 101/202/303. Script so sánh trạng thái **từng tên test**, kiểm tra đúng mười lỗi SUT đã biết, không có test skip/handle mở và hash database gốc không đổi. Report JSON trung gian nằm trong thư mục tạm duy nhất và được dọn sau khi chạy. Để tái hiện một thứ tự cụ thể:
+
+```powershell
+npm test -- --randomize --seed=202 --showSeed --detectOpenHandles
+```
+
+Kết quả B-03: mỗi lần **39 test, 29 pass, 10 fail**, trong đó ba test harness mới pass. Các lỗi SUT giữ nguyên từ B-02. `test:isolation` exit 0 chỉ xác nhận tính ổn định và cô lập theo phép kiểm tra này; nó không làm `npm test` pass, không thay quality gate và không chứng minh độc lập với mọi thứ tự có thể có. Khi bổ sung test hoặc sửa bug SUT, cập nhật số lượng/danh sách lỗi baseline trong `scripts/verify-isolation.cjs` dựa trên kết quả được xác minh.
+
+Bằng chứng: [log B-03](../../docs/evidence/B-03/isolation.log). Thay đổi được chạy trên nền commit B-02 `ec6d7bf`, chưa commit tại thời điểm kiểm chứng. Các bước trên cho phép thành viên tự chạy lại trên máy của mình mà không cần database hoặc server của người viết test.

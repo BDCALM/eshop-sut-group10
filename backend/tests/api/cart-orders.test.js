@@ -9,15 +9,13 @@ function call(method, url) {
   return request(harness.app)[method](url).auth(user.token, { type: 'bearer' });
 }
 async function addProduct(quantity = 1) {
-  const product = await harness.get('SELECT * FROM products WHERE id = 1');
+  const product = await harness.product();
   const response = await call('post', '/api/cart').send({ ...product, quantity });
   expect(response.status).toBe(200);
   return product;
 }
 async function createOrder(status = 'pending') {
-  const result = await harness.run('INSERT INTO orders (user_id, total_amount, status, shipping_address) VALUES (?, ?, ?, ?)',
-    [user.id, 30000000, status, 'B-02 test address']);
-  return result.id;
+  return harness.order(user.id, status);
 }
 
 describe('API: cart, checkout and orders', () => {

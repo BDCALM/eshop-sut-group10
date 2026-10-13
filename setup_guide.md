@@ -54,7 +54,7 @@ Server chạy tại `http://localhost:3000`. Port 3000 đang được khai báo 
 - Dữ liệu mẫu: 2 người dùng, 5 sản phẩm, 3 danh mục, 4 coupon; chưa có đơn hàng hoặc lượt sử dụng coupon.
 - Coupon mẫu: `SAVE10`, `BIGBUY`, `VIP100`, `EXPIRED`.
 - Giỏ hàng nằm trong biến `userCarts` ở bộ nhớ server; khởi động lại sẽ mất giỏ hàng.
-- Bộ test B-02 dùng SQLite trong bộ nhớ và seed thật qua helper Jest, tách biệt file dữ liệu của ứng dụng. Việc hoàn thiện fixture/mock và quy trình setup/cleanup thuộc B-03.
+- Bộ test dùng SQLite trong bộ nhớ và seed thật qua helper Jest, tách biệt file dữ liệu của ứng dụng. B-03 bổ sung fixture dùng chung, setup/cleanup và kiểm chứng tính độc lập; xem hướng dẫn trong `backend/tests/README.md`.
 
 Không cần chạy `node database.js` trước `node server.js`. Lệnh này cũng reset dữ liệu, trong khi server đã thực hiện cùng việc khi khởi động. Module không đóng kết nối SQLite, nên lệnh seed riêng có thể tiếp tục chạy thay vì tự kết thúc.
 
@@ -153,7 +153,7 @@ node --check database.js
 
 `backend/test_profile.js` là script gọi thử API: tạo JWT, in phản hồi, không có assertion và không được nối vào `npm test`. Trên bản cài sạch, script lỗi `Cannot find module 'axios'` vì backend chưa khai báo dependency này. Script không được tính là bộ test tự động; không công khai JWT mà nó in ra.
 
-B-01 ghi nhận chưa có bộ test tự động. B-02 đã bổ sung Jest, unit/API/smoke test đại diện và cơ chế database trong bộ nhớ tối thiểu. Xem [hướng dẫn và bảng ánh xạ test](backend/tests/README.md). B-03 tiếp tục hoàn thiện fixture/setup/cleanup; B-04 phụ trách chuẩn hóa lint/build/test và coverage XML.
+B-01 ghi nhận chưa có bộ test tự động. B-02 bổ sung Jest và unit/API/smoke test đại diện; B-03 bổ sung fixture, setup/cleanup và lệnh kiểm tra tính độc lập. Xem [hướng dẫn và bảng ánh xạ test](backend/tests/README.md). B-04 phụ trách chuẩn hóa lint/build/test và coverage XML.
 
 Chạy bộ test từ thư mục `backend`, không cần khởi động server:
 

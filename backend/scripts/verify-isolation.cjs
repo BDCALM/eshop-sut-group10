@@ -50,9 +50,11 @@ try {
   // Only the unique temporary directory created by this script is removed.
   if (path.dirname(path.resolve(reportDirectory)) !== temporaryRoot ||
       !path.basename(reportDirectory).startsWith('eshop-isolation-')) {
-    throw new Error('Refusing to remove a directory outside the temporary report location');
+    verificationFailed = true;
+    console.error('Refusing to remove a directory outside the temporary report location');
+  } else {
+    rmSync(reportDirectory, { recursive: true, force: true });
   }
-  rmSync(reportDirectory, { recursive: true, force: true });
 }
 console.log(`B-03 isolation verification: ${verificationFailed ? 'FAIL' : 'PASS'}`);
 process.exitCode = verificationFailed ? 1 : 0;

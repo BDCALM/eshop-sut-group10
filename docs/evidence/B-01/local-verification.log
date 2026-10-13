@@ -1,0 +1,337 @@
+B-01 local verification
+Date: 2026-10-13, Asia/Bangkok (+07:00)
+Source commit: 39742cc6acb1ec15a18ebb68e76d905b5fa3e727
+Environment: Windows, PowerShell, Node.js v24.14.0, npm 11.21.0
+Source: fresh git archive extracted into a disposable directory; no pre-existing node_modules.
+Host runtime, npm cache and network reused. Not a clean OS or CI run.
+Temporary source paths replaced with [CLEAN_COPY]. No JWT/profile response bodies recorded.
+Commands ran in the corresponding component directory.
+
+COMMAND: backend: npm ci --no-audit --no-fund
+EXIT CODE: 0
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+
+added 135 packages in 12s
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   sqlite3@6.0.1 (install: prebuild-install -r napi || node-gyp rebuild)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+COMMAND: frontend-web: npm ci --no-audit --no-fund
+EXIT CODE: 0
+
+added 225 packages in 12s
+
+COMMAND: frontend-admin: npm ci --no-audit --no-fund
+EXIT CODE: 0
+
+added 225 packages in 10s
+
+COMMAND: frontend-mobile: npm ci --no-audit --no-fund
+EXIT CODE: 0
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+
+added 696 packages in 41s
+
+COMMAND: backend: node --check server.js; node --check database.js (each exit 0)
+EXIT CODE: 0
+COMMAND: backend: require sqlite3 native binding
+EXIT CODE: 0
+sqlite3 native binding loaded
+
+COMMAND: backend: npm test
+EXIT CODE: 1
+
+> backend@1.0.0 test
+> echo "Error: no test specified" && exit 1
+
+"Error: no test specified" 
+
+COMMAND: backend: node test_profile.js
+EXIT CODE: 1
+node:internal/modules/cjs/loader:1459
+  throw err;
+  ^
+
+Error: Cannot find module 'axios'
+Require stack:
+- [CLEAN_COPY]\backend\test_profile.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> ([CLEAN_COPY]\backend\test_profile.js:1:15)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\DELL\\AppData\\Local\\Temp\\eshop-b01-f6a06410db564f928fe146f78bba2dff\\source\\backend\\test_profile.js'
+  ]
+}
+
+Node.js v24.14.0
+
+COMMAND: frontend-web: npm run build
+EXIT CODE: 0
+
+> frontend-web@0.0.0 build
+> vite build
+
+vite v8.0.12 building client environment for production...
+
+transforming...✓ 86 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.30 kB
+dist/assets/index-Yvz0EZn5.css   10.66 kB │ gzip:  2.92 kB
+dist/assets/index-BIA9moLg.js   295.64 kB │ gzip: 95.06 kB
+
+[PLUGIN_TIMINGS] Warning: Your build spent significant time in plugins. Here is a breakdown:
+  - vite:css (49%)
+  - vite:build-html (48%)
+See https://rolldown.rs/options/checks#plugintimings for more details.
+
+✓ built in 14.89s
+
+COMMAND: frontend-web: npm run lint
+EXIT CODE: 1
+
+> frontend-web@0.0.0 lint
+> eslint .
+
+
+[CLEAN_COPY]\frontend-web\src\App.jsx
+   1:8   error  'React' is defined but never used                                                                                           no-unused-vars
+  17:11  error  'cart' is assigned a value but never used                                                                                   no-unused-vars
+  17:30  error  React Hook "useCart" is called conditionally. React Hooks must be called in the exact same order in every component render  react-hooks/rules-of-hooks
+
+[CLEAN_COPY]\frontend-web\src\context\AuthContext.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       no-unused-vars
+  19:11  error  Error: Cannot access variable before it is declared
+
+`logout` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  17 |         })
+  18 |         .catch(() => {
+> 19 |           logout();
+     |           ^^^^^^ `logout` accessed before it is declared
+  20 |         });
+  21 |     } else {
+  22 |       delete axios.defaults.headers.common["Authorization"];
+
+  35 |   };
+  36 |
+> 37 |   const logout = () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^
+> 38 |     setToken(null);
+     | ^^^^^^^^^^^^^^^^^^^
+> 39 |     setUser(null);
+     | ^^^^^^^^^^^^^^^^^^^
+> 40 |     localStorage.removeItem("token");
+     | ^^^^^^^^^^^^^^^^^^^
+> 41 |   };
+     | ^^^^^ `logout` is declared here
+  42 |
+  43 |   return (
+  44 |     <AuthContext.Provider value={{ user, token, login, logout }}>  react-hooks/immutability
+  50:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-refresh/only-export-components
+
+[CLEAN_COPY]\frontend-web\src\context\CartContext.jsx
+   1:8   error  'React' is defined but never used                                                                                               no-unused-vars
+  36:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+[CLEAN_COPY]\frontend-web\src\pages\Cart.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\Checkout.jsx
+  1:8   error  'React' is defined but never used               no-unused-vars
+  8:28  error  'clearCart' is assigned a value but never used  no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\ForgotPassword.jsx
+   1:8   error  'React' is defined but never used  no-unused-vars
+   3:23  error  'Link' is defined but never used   no-unused-vars
+  36:14  error  'err' is defined but never used    no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\Home.jsx
+   1:8  error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            no-unused-vars
+  32:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  30 |
+  31 |   useEffect(() => {
+> 32 |     fetchProducts();
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |   }, []);
+  34 |
+  35 |   const handleSearch = (e) => {  react-hooks/set-state-in-effect
+
+[CLEAN_COPY]\frontend-web\src\pages\Login.jsx
+   1:8   error  'React' is defined but never used  no-unused-vars
+  17:14  error  'err' is defined but never used    no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\ProductDetail.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\Profile.jsx
+   1:8   error    'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-unused-vars
+  33:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  31 |   useEffect(() => {
+  32 |     if (user) {
+> 33 |       setName(user.name);
+     |       ^^^^^^^ Avoid calling setState() directly within an effect
+  34 |       setPhone(user.phone || "");
+  35 |       setShippingAddress(user.shipping_address || "");
+  36 |     }  react-hooks/set-state-in-effect
+  38:6   warning  React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  61:14  error    'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-unused-vars
+
+[CLEAN_COPY]\frontend-web\src\pages\Register.jsx
+  1:8  error  'React' is defined but never used  no-unused-vars
+
+✖ 24 problems (23 errors, 1 warning)
+
+
+COMMAND: frontend-admin: npm run build
+EXIT CODE: 0
+
+> frontend-admin@0.0.0 build
+> vite build
+
+vite v8.0.12 building client environment for production...
+
+transforming...✓ 68 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.30 kB
+dist/assets/index-BhE0Kt7X.css    9.75 kB │ gzip:  2.69 kB
+dist/assets/index-CkOkPGUQ.js   251.33 kB │ gzip: 80.03 kB
+
+✓ built in 1.39s
+
+COMMAND: frontend-admin: npm run lint
+EXIT CODE: 1
+
+> frontend-admin@0.0.0 lint
+> eslint .
+
+
+[CLEAN_COPY]\frontend-admin\src\App.jsx
+   1:8   error  'React' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               no-unused-vars
+  19:10  error  'csvFile' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-unused-vars
+  37:7   error  Error: Cannot access variable before it is declared
+
+`fetchData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  35 |     if (token) {
+  36 |       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+> 37 |       fetchData();
+     |       ^^^^^^^^^ `fetchData` accessed before it is declared
+  38 |     }
+  39 |   }, [token]);
+  40 |
+
+  39 |   }, [token]);
+  40 |
+> 41 |   const fetchData = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |     try {
+     | ^^^^^^^^^
+> 43 |       const userRes = await axios.get(`${API_URL}/admin/users`);
+     …
+     | ^^^^^^^^^
+> 58 |     }
+     | ^^^^^^^^^
+> 59 |   };
+     | ^^^^^ `fetchData` is declared here
+  60 |
+  61 |   const handleLogin = async (e) => {
+  62 |     e.preventDefault();  react-hooks/immutability
+  71:14  error  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 no-unused-vars
+
+✖ 4 problems (4 errors, 0 warnings)
+
+
+COMMAND: frontend-mobile: CI=1 npx expo config --type public
+EXIT CODE: 0
+
+{
+  name: 'frontend-mobile',
+  slug: 'frontend-mobile',
+  version: '1.0.0',
+  orientation: 'portrait',
+  icon: './assets/icon.png',
+  userInterfaceStyle: 'light',
+  newArchEnabled: true,
+  description: undefined,
+  sdkVersion: '54.0.0',
+  platforms: [
+    'ios',
+    'android'
+  ],
+  splash: {
+    image: './assets/splash-icon.png',
+    resizeMode: 'contain',
+    backgroundColor: '#ffffff'
+  },
+  ios: {
+    supportsTablet: true
+  },
+  android: {
+    edgeToEdgeEnabled: true,
+    adaptiveIcon: {
+      foregroundImage: './assets/adaptive-icon.png',
+      backgroundColor: '#ffffff'
+    }
+  },
+  web: {
+    favicon: './assets/favicon.png'
+  }
+}
+
+
+COMMAND: backend/web/admin: HTTP requests after development server startup
+EXIT CODE: 0
+GET http://127.0.0.1:3000/api/products status=200
+records=5
+GET http://127.0.0.1:3000/api/categories status=200
+records=3
+GET http://127.0.0.1:5173/ status=200
+GET http://127.0.0.1:5174/ status=200
+POST /api/login status=200 role=admin token-present=True
+GET /api/users/me status=200 role=admin
+POST /api/login status=200 role=user token-present=True
+GET /api/users/me status=200 role=user
+
+COMMAND: backend: read seeded table counts via sqlite3 without importing database.js
+EXIT CODE: 0
+[{"users":2,"products":5,"categories":3,"coupons":4,"orders":0,"coupon_usage":0}]
+
+COMMAND: mobile: GET /status after CI=1 Expo Metro startup on localhost:8081
+EXIT CODE: 0
+GET http://127.0.0.1:8081/status status=200 body=112 97 99 107 97 103 101 114 45 115 116 97 116 117 115 58 114 117 110 110 105 110 103
+
+Metro startup observation: expo@54.0.34 installed; Expo recommended ~54.0.37.
+Metro /status response bytes decode to packager-status:running.
+All four server sessions were stopped using Ctrl+C after verification.
+No mobile device/emulator or browser interaction was verified.

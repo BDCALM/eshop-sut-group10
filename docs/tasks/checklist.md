@@ -18,7 +18,7 @@ Dưới đây là checklist để hoàn thiện **toàn bộ T07**. Mình phân 
 
 | Mã Task | Checklist | Người thực hiện | Bằng chứng hoàn thành |
 |:---:|---|---|---|
-| **B-01** | [ ] Kiểm kê EShop: cách cài, build, chạy backend, database/mock, test hiện có và lệnh chạy được từ máy sạch | Vỹ | README kỹ thuật và kết quả chạy local |
+| **B-01** | [x] Kiểm kê EShop: cách cài, build, chạy backend, database/mock, test hiện có và lệnh chạy được từ máy sạch | Vỹ | [Hướng dẫn kỹ thuật](../../setup_guide.md), [log chạy local](../evidence/B-01/local-verification.log). Đã kiểm chứng bản sao sạch ngày 2026-10-13. |
 | **B-02** | [ ] Viết hoặc hoàn thiện **unit test, API test, smoke test** cho vài luồng đại diện; nêu rõ lý do chọn luồng | Vỹ; Dương review | Test code, kết quả chạy và bảng ánh xạ test → chức năng |
 | **B-03** | [ ] Thiết lập fixture/seed/mock, setup và cleanup để test độc lập, có thể lặp lại | Vỹ | Chạy lại nhiều lần không phụ thuộc thứ tự test |
 | **B-04** | [ ] Chuẩn hóa lệnh `lint`, `build`, `test` và tạo coverage XML; không dùng lệnh giả chỉ để pipeline xanh | Vỹ | Các lệnh chạy thành công từ clone sạch |

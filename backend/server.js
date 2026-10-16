@@ -89,7 +89,7 @@ app.post("/api/reset-password", (req, res) => {
   db.run(
     "UPDATE users SET password = ?, reset_token = NULL WHERE email = ? AND reset_token = ?",
     [newPassword, email, resetToken],
-    function (err) {
+    function () {
       if (this.changes === 0)
         return res.status(400).json({ error: "Invalid token or email" });
       res.json({ message: "Password reset successfully" });
@@ -333,7 +333,7 @@ app.put("/api/orders/:id/cancel", authenticateToken, (req, res) => {
       db.run(
         "UPDATE orders SET status = ? WHERE id = ?",
         ["canceled", req.params.id],
-        function (err) {
+        function () {
           res.json({ message: "Order canceled successfully" });
         },
       );
@@ -394,7 +394,7 @@ app.post("/api/apply-coupon", (req, res) => {
                 });
               }
 
-              let discount_amount = 0;
+              let discount_amount;
               if (coupon.type === "percent") {
                 discount_amount = Math.floor(
                   total_amount * (1 - coupon.discount_value),
@@ -414,7 +414,7 @@ app.post("/api/apply-coupon", (req, res) => {
             },
           );
         } else {
-          let discount_amount = 0;
+          let discount_amount;
           if (coupon.type === "percent") {
             discount_amount = Math.floor(
               total_amount * (1 - coupon.discount_value),
@@ -502,7 +502,7 @@ app.get("/api/admin/users", authenticateToken, (req, res) => {
 });
 
 app.delete("/api/admin/users/:id", authenticateToken, (req, res) => {
-  db.run("DELETE FROM users WHERE id = ?", [req.params.id], function (err) {
+  db.run("DELETE FROM users WHERE id = ?", [req.params.id], function () {
     res.json({ message: "User deleted" });
   });
 });
@@ -559,7 +559,7 @@ app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
       db.run(
         "UPDATE orders SET status = ? WHERE id = ?",
         [status, req.params.id],
-        function (err) {
+        function () {
           res.json({ message: "Order status updated" });
         },
       );
@@ -567,6 +567,10 @@ app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = { app, authenticateToken };

@@ -44,6 +44,8 @@ jobs:
           printf 'Runner OS: %s\n' "${RUNNER_OS}"
 
       - name: Install dependencies
+        env:
+          npm_config_build_from_source: "true"
         run: npm ci
 
       - name: Lint

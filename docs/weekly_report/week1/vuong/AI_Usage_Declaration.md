@@ -98,8 +98,7 @@ Chưa có cơ sở quy đổi đóng góp thành một tỷ lệ phần trăm. A
 - **Kế hoạch theo phase:** Đã soạn trong giai đoạn trước; hiện không còn file đính kèm trong thư mục này, không tính là bằng chứng setup.
 - **Tài liệu tham chiếu của repo:** [checklist](../../../tasks/checklist.md), [hướng dẫn test](../../../../backend/tests/README.md), [kiến trúc harness](../../../architecture/test-harness.md). Đây là đầu vào của nhóm, không khai báo là sản phẩm tôi tạo trong phiên.
 - **Log/report local khảo sát:** [survey.log](../../../../backend/test-results/survey.log), [survey.json](../../../../backend/test-results/survey.json). Output Git ignore, không có bảo đảm trên clone sạch; chưa thay thế evidence Jenkins hoặc dữ liệu D-05.
-- **Tài liệu YAS:** 23120328_23120395_23120409_23120410 (2).docx, do tôi cung cấp từ Downloads; không được copy vào thư mục nộp này.
-- [x] **Hướng dẫn setup Jenkins:** [docs/jenkins/README.md](../../../jenkins/README.md).
+- [x] **Hướng dẫn setup Jenkins:** [docs/jenkins/SETUP_GUIDE.md](../../../jenkins/SETUP_GUIDE.md).
 - [x] **Cấu hình môi trường:** [infra/jenkins/compose.yaml](../../../../infra/jenkins/compose.yaml) — chỉ controller, không có job/pipeline.
 - **Log kỹ thuật riêng:** Đã xóa theo yêu cầu; phần sử dụng AI cho setup được ghi ở mục 3.7 và phiên chat 2.
 - **PDF/HTML/full-session export, share link, PR và Jenkins build URL:** Chưa đính kèm hoặc chưa có trong phạm vi báo cáo.

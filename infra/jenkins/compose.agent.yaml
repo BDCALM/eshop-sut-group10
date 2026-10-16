@@ -1,0 +1,29 @@
+services:
+  agent:
+    image: eshop-jenkins-agent:node24.14.0
+    build:
+      context: .
+      dockerfile: agent.Dockerfile
+    init: true
+    restart: unless-stopped
+    depends_on:
+      controller:
+        condition: service_healthy
+    environment:
+      JENKINS_SECRET: ${JENKINS_AGENT_SECRET:?Set JENKINS_AGENT_SECRET in infra/jenkins/.env}
+      NPM_CONFIG_CACHE: /home/jenkins/.npm
+    command:
+      - -url
+      - http://controller:8080/
+      - -name
+      - eshop-agent
+      - -webSocket
+      - -workDir
+      - /home/jenkins/agent
+    volumes:
+      - agent-work:/home/jenkins/agent
+      - npm-cache:/home/jenkins/.npm
+
+volumes:
+  agent-work:
+  npm-cache:

@@ -72,7 +72,7 @@ Không cần Docker Pipeline plugin hoặc Docker-in-Docker nếu agent containe
 
 ### Đầu ra và tiêu chí xong
 
-File đề xuất: `infra/jenkins/compose.yaml`, Dockerfile agent/controller khi cần, `plugins.txt`, `.env.example`; guide tại `docs/jenkins/README.md`; evidence tại `docs/evidence/D-01/`.
+File cấu hình: `infra/jenkins/compose.yaml` (controller), `infra/jenkins/compose.agent.yaml` và `infra/jenkins/agent.Dockerfile` (agent, workspace, npm cache), `infra/jenkins/.env.example`; plugin cài qua giao diện theo guide, danh sách phiên bản thực tế lưu tại `docs/evidence/D-01/plugins.txt`; guide tại [`docs/jenkins/SETUP_GUIDE.md`](SETUP_GUIDE.md); evidence tại `docs/evidence/D-01/`.
 
 Jenkins truy cập được trên máy, agent online và chạy được `git --version`, `node --version`, `npm --version` trên chính agent. Guide cho phép dựng lại, không dựa vào các bước cài tay chưa ghi.
 

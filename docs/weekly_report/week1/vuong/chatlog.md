@@ -361,7 +361,7 @@ Mình không cập nhật chatlog hoặc AI Usage.
 - Image chính thức Jenkins LTS 2.580.1/JDK 21, cố định digest trong Compose.
 - Controller chạy healthy; GET /login trả HTTP 200, header X-Jenkins là 2.580.1, title là Sign in - Jenkins.
 - Volume eshop-ci_jenkins-home gắn vào /var/jenkins_home; dùng lại volume đã có, chưa kiểm chứng dựng từ volume rỗng.
-- Chỉ giữ [Compose](../../../../infra/jenkins/compose.yaml), file cấu hình cổng/ignore và [hướng dẫn setup](../../../jenkins/README.md).
+- Chỉ giữ [Compose](../../../../infra/jenkins/compose.yaml), file cấu hình cổng/ignore và [hướng dẫn setup](../../../jenkins/SETUP_GUIDE.md).
 - Chưa ghi nhận sinh viên đăng nhập thành công, kiểm tra stop/start bằng tài khoản hoặc tạo job CI. Kết quả HTTP không tự chứng minh những bước đó đã hoàn thành.
 
 <a id="jenkins-setup-disclosure"></a>

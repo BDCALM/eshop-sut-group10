@@ -1,6 +1,6 @@
 # Hướng dẫn setup Jenkins
 
-Tài liệu gồm hai phần: (A) dựng Jenkins controller và cài plugin, (B) dựng agent thực thi job có Git, Node/npm và npm cache. Chưa cấu hình job, pipeline, webhook hoặc report cho EShop.
+Tài liệu gồm hai phần: (A) dựng Jenkins controller và cài plugin, (B) dựng agent thực thi job có Git, Node/npm và npm cache. Cách xem stage và báo cáo pipeline được trình bày trong [hướng dẫn báo cáo](reports.md).
 
 ## Thành phần
 
@@ -172,7 +172,7 @@ docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml
 
 Bước này hoàn tất khi agent Online, các lệnh kiểm tra phiên bản chạy được và kiểm tra ghi workspace/npm cache in `write-ok`. Chưa cần GitHub webhook, job pipeline hoặc chạy bộ test. Quyền checkout GitHub được cấu hình riêng khi tạo job.
 
-Jenkinsfile, test report và pipeline là các bước tiếp theo.
+Jenkinsfile và phần publish báo cáo được cấu hình trong repo. Xem [hướng dẫn mở Stages, Test Results và Coverage](reports.md) để theo dõi build trên giao diện thay vì đọc raw JSON/XML. Các build cũ không tự có báo cáo mới; cần chạy build từ commit chứa cấu hình publisher.
 
 ## Tham khảo
 

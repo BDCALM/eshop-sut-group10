@@ -1,4 +1,4 @@
-// CI pipeline for the EShop backend (task D-02).
+// CI pipeline and report publishing for the EShop backend (tasks D-02/D-03).
 // Runs on the Docker agent defined in infra/jenkins (label eshop-node: Node 24.14.0, npm 11.9.0).
 // Stages: Checkout -> Environment -> Install -> Lint -> Build -> Tests.
 // A failing command fails its own stage and skips the following stages; logs are archived in post.
@@ -99,13 +99,34 @@ npm run test:ci -- --json --outputFile="$LOG_DIR/results.json" 2>&1 | tee "$LOG_
 '''
                 }
             }
+            post {
+                always {
+                    dir('backend') {
+                        script {
+                            // Publish results even after Jest fails; missing reports are errors.
+                            try {
+                                junit testResults: 'test-results/junit.xml',
+                                    allowEmptyResults: false,
+                                    skipPublishingChecks: true
+                            } finally {
+                                recordCoverage tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']],
+                                    enabledForFailure: true,
+                                    failOnError: true,
+                                    skipPublishingChecks: true,
+                                    sourceCodeRetention: 'EVERY_BUILD',
+                                    sourceDirectories: [[path: '.']]
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     post {
         always {
             // Runs even when a stage fails, so the logs needed for diagnosis are kept.
-            // JUnit and Coverage publishing are added in D-03.
+            // Keep raw files in addition to the Test Results and Coverage views.
             archiveArtifacts artifacts: 'backend/test-results/**, backend/coverage/cobertura-coverage.xml, backend/coverage/coverage-summary.json',
                 allowEmptyArchive: true,
                 fingerprint: true

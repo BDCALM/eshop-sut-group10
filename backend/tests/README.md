@@ -156,6 +156,8 @@ Coverage đo `server.js` và `database.js`, bao gồm cả code chưa được t
 - `coverage/coverage-summary.json`: số liệu máy đọc được cho badge/tổng hợp.
 - Bảng summary trong terminal/log.
 
+`npm run test:ci` còn dùng reporter `jest-junit` để sinh `test-results/junit.xml`, bên cạnh reporter terminal và coverage. File này cho phép Jenkins hiển thị từng test, số pass/fail và lỗi assertion trên giao diện Test Results; nó không thay đổi phạm vi test hoặc exit code. Xem [hướng dẫn báo cáo Jenkins](../../docs/jenkins/reports.md).
+
 Các file trong `coverage/` là output tự sinh, được Git ignore. Muốn tái lập trên clone sạch hoặc thu artefact CI, dùng:
 
 ```powershell

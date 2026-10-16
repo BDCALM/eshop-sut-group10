@@ -6,10 +6,10 @@
 - **Công cụ:** ChatGPT / Codex
 - **Thời gian:** 14–16/10/2026, Asia/Bangkok; không ghi nhận timestamp riêng của từng lượt.
 - **Model:** Theo thông tin đã điền trong bản khai: GPT-6.1 Sol (high / medium / light); chưa xác minh cấu hình model của phiên.
-- **Phạm vi:** Khảo sát EShop, tìm hiểu/lập kế hoạch phần D và mục E; bổ sung phiên setup Jenkins controller ngày 16/10/2026. Chưa triển khai job CI hoặc webhook.
+- **Phạm vi:** Khảo sát EShop, tìm hiểu/lập kế hoạch phần D và mục E; setup Jenkins; bổ sung ba mục hỗ trợ Jenkinsfile D-02, report/artifact D-03 và tổng hợp minh chứng hệ thống D-02 ngày 16/10/2026. Các mốc tư vấn/setup ban đầu được giữ riêng với giai đoạn đã có job chạy thật.
 - **Khai báo và Human Oversight:** [AI_Usage_Declaration.md](AI_Usage_Declaration.md).
 
-Các prompt dưới đây giữ nguyên cách diễn đạt của sinh viên. Phản hồi là các trích đoạn nguyên văn từ phiên chat, có thể lược bỏ phần khác giữa hai trích đoạn; đây không phải bản export toàn bộ session hoặc toàn bộ tool log. Kết quả chạy local do AI thực hiện trong phiên khảo sát, không phải lần sinh viên tự chạy Jenkins.
+Các prompt dưới đây giữ nguyên cách diễn đạt của sinh viên; nếu chỉ lấy một phần prompt thì ghi rõ là trích đoạn. Phản hồi có nhãn trích nguyên văn hoặc tóm tắt tương ứng; đây không phải bản export toàn bộ session/tool log. Kết quả local và thao tác kiểm chứng bằng công cụ do AI thực hiện không được khai báo thành lần sinh viên tự chạy độc lập.
 
 ## Phiên chat 1: Khảo sát repo và chuẩn bị CI Jenkins
 <a id="survey"></a>
@@ -387,3 +387,99 @@ không ý là bạn ghi vào tài liệu dùng AI của tôi ấy =))). xóa cá
 #### Nội dung cập nhật theo yêu cầu:
 
 Xóa log kỹ thuật riêng; ghi phần setup vào mục 3.7 của [AI Usage Declaration](AI_Usage_Declaration.md) và phiên chat này. Không lưu mật khẩu/token hoặc khai báo pipeline đã gỡ là kết quả hoàn thành. Việc ghi bổ sung diễn ra theo yêu cầu rõ ràng của sinh viên; không tự động ghi các lượt làm việc sau.
+
+## Phiên chat 3: Jenkinsfile, artifact và tổng hợp log hệ thống
+
+- **Ngày ghi bổ sung:** 16/10/2026, Asia/Bangkok; bổ sung đúng ba mục theo yêu cầu sinh viên, không tự ghi toàn bộ các lượt trao đổi khác.
+- **Yêu cầu ghi log hiện tại:** “thêm 1 log bạn giúp tôi viết jenkins file và 1 log lưu artifact và 1 long tổng hợp log từ hệ thống trong AI usage của tôi đi”.
+- Các mục 16–18 ghép các lượt cùng chủ đề để khai báo rõ quá trình; prompt trích nguyên văn, phần phản hồi dưới đây là **tóm tắt**, không giả là full-session export.
+
+<a id="jenkinsfile-d02"></a>
+
+### 16. Hỗ trợ viết, review và chạy Jenkinsfile (D-02)
+
+#### Prompt (Sinh viên, trích đoạn từ đề xuất sáu stage):
+
+````text
+mình dự tính 6 stage này cho jenkins file của repo hiện tại
+````
+
+#### Prompt review tiếp theo (Sinh viên):
+
+````text
+verify xem jenkins file mình vừa tạo và nhận xét
+````
+
+#### Prompt xử lý build tiếp theo (Sinh viên):
+
+````text
+Bạn hãy sửa thử xem sao
+````
+
+#### Phản hồi và thao tác của AI (tóm tắt):
+
+AI đối chiếu sáu stage Checkout → Environment → Install → Lint → Build → Tests với backend/Jest và label agent. Kiểm tra năm đoạn Bash bằng `bash -n`; thử lệnh lỗi qua `tee` xác nhận `pipefail` giữ exit code. Phát hiện npm lỗi bên trong `echo "$(...)"` vẫn có thể làm Environment pass, giải thích cách tách lệnh gán; không ghi rằng review tự động đã sửa file.
+
+Khi sinh viên đã lưu credential nhưng build #1 vẫn dùng anonymous và ngủ vì API limiter, AI kiểm tra cấu hình/log; dùng quyền quản trị container restart Jenkins và hook Groovy tạm yêu cầu retry đúng job, rồi xóa hook. Build #2 checkout `bb185c22662af74c9bb43b70943a7350e154ed49`; Checkout/Environment/Install/Lint/Build pass, Tests chạy đủ 39 test và ghi 29 pass/10 fail. Build FAILURE đúng exit code; lúc đó còn cảnh báo 403 gửi status về GitHub.
+
+#### Vai trò và đánh giá của sinh viên:
+
+Tôi đề xuất sáu stage, tạo Jenkinsfile ban đầu và push; AI hỗ trợ review/kiểm chứng/vận hành, không phải viết thay toàn bộ file ban đầu. Tôi hỏi lại các nhận xét chưa hiểu và xác nhận SUT có bug phục vụ bài testing. Không sửa assertion, bỏ test hoặc coi CI đỏ do test fail là bằng chứng Jenkins không hoạt động. Các kết quả công cụ là phần AI kiểm tra trong phiên.
+
+Liên kết: [AI Usage mục 3.8](AI_Usage_Declaration.md#38-hỗ-trợ-viết-review-và-chạy-jenkinsfile-d-02), [Jenkinsfile](../../../../Jenkinsfile).
+
+<a id="jenkins-artifacts-d03"></a>
+
+### 17. Lưu artifact và hiển thị report test/coverage (D-03)
+
+#### Prompt (Sinh viên):
+
+````text
+chưa thấy gì ngoài ra các báo cáo chưa hiển thị giao diện cho dễ theo dõi vào đọc dữ liệu khó theo dõi.
+````
+
+Sinh viên gửi kèm ảnh trang nhánh Jenkins để chỉ ra giao diện đang xem; ảnh đó không được sao chép thành ảnh Stage View minh chứng D-02.
+
+#### Prompt kiểm tra phần AI đã thêm (Sinh viên):
+
+````text
+bạn đã thêm những gì vậy. Xong rồi mình push code lên à
+````
+
+#### Phản hồi và thao tác của AI (tóm tắt):
+
+AI phân biệt artifact tải xuống với report được publisher gắn vào build. Thêm `jest-junit` 17.0.0 và cấu hình `test:ci` xuất `test-results/junit.xml`; sửa package/lockfile, Jenkinsfile và tài liệu report. `post always` của Tests gọi `junit`/`recordCoverage` kể cả khi test fail, giữ archive log/JSON/XML/coverage ở cuối pipeline. Bật `enabledForFailure` cho coverage; không thêm ngưỡng coverage hoặc biến test fail thành pass.
+
+AI cài Pipeline Stage View cùng dependency còn thiếu; plugin active và Declarative validator pass. Chạy bản sao Linux sạch: npm ci/lint/build pass, JUnit 39 case/10 failure/0 skip, tên case khớp Jest JSON; Cobertura hợp lệ và Jest exit 1. Sinh viên được thông báo build cũ không tự có report mới, cần commit/push rồi chạy build mới.
+
+#### Vai trò và đánh giá của sinh viên:
+
+Tôi yêu cầu giao diện dễ đọc, hỏi danh sách file thay đổi và commit/push phần report thành `a559c53acb9a3b03cc05fca8a855bcc59c8eaae8`. AI thực hiện sửa cấu hình và kiểm chứng; code SUT/test assertion giữ nguyên. Build #4 từ commit này có publisher và archive thành công, vẫn 29 pass/10 fail. Chưa khai báo hoàn tất đo cache hoặc D-05.
+
+Liên kết: [AI Usage mục 3.9](AI_Usage_Declaration.md#39-lưu-artifact-và-hiển-thị-báo-cáo-testcoverage-d-03), [hướng dẫn report](../../../jenkins/reports.md).
+
+<a id="jenkins-evidence-d02"></a>
+
+### 18. Tổng hợp log hệ thống và lưu minh chứng D-02
+
+#### Prompt (Sinh viên):
+
+````text
+bạn hãy làm những gì bạn làm được còn các phần cần tôi copy bỏ vào hãy nói tôi
+````
+
+Prompt này tiếp nối danh sách sinh viên đề xuất cho `docs/evidence/D-02/`: baseline, console full suite, ảnh stage, quyết định build xanh và Phần C của setup guide.
+
+#### Phản hồi và thao tác của AI (tóm tắt):
+
+AI kiểm tra các build đã hoàn tất và chọn **build #4** trên `cicd/jenkins`, commit `a559c53acb9a3b03cc05fca8a855bcc59c8eaae8`. Lấy toàn bộ console từ volume Jenkins, chỉ lọc ConsoleNote nhị phân/ANSI để thành text; copy nguyên năm artifact environment/Jest JSON/JUnit/Coverage JSON/Cobertura. Sinh metadata chọn lọc và SHA-256, kiểm tra tên file/link, số test trong JSON/JUnit và từng ID fail với B-04.
+
+AI viết baseline với Node v24.14.0, npm 11.9.0, 39 test/29 pass/10 fail, thời gian build **17,600 giây**, Jest **1,960 giây**. Đối chiếu cho thấy code SUT/test/fixture/Jest config không đổi, nhưng OS/npm/reporter/tùy chọn chạy khác nên chưa kết luận tốc độ nền tảng. Ghi rõ branch coverage Jest **39,09% (52/133)** khác số Jenkins đọc Cobertura **41,74% (48/115)**; không trộn hai nguồn số liệu hoặc tự kết luận nguyên nhân.
+
+AI thêm Phần C tạo/chạy Multibranch vào setup guide và link evidence vào checklist, giữ checkbox D-02 chưa hoàn thành. Mẫu `group-decision.md` đánh dấu các phần chờ xác nhận; chưa có ảnh Stage View được tạo thay ảnh thật.
+
+#### Vai trò và đánh giá của sinh viên:
+
+Tôi yêu cầu AI thu thập phần có thể làm được và chỉ rõ phần cần tôi bổ sung; tôi hỏi lại file được thêm và ảnh cần chụp. Việc xuất log do AI thực hiện bằng Docker, không phải tôi bấm tải qua trình duyệt. Tại lần ghi bổ sung này, repo đã có ảnh `stage-build-view.png`; AI xem và xác nhận hàng #4 có Checkout đến Build xanh, Tests đỏ. AI không tạo/sửa ảnh. Quyết định build xanh và review của Vỹ vẫn chờ xác nhận. Nội dung này là evidence D-02, không phải manual triage E-04 hoặc thực nghiệm mười lượt flaky.
+
+Liên kết: [AI Usage mục 3.10](AI_Usage_Declaration.md#310-tổng-hợp-log-hệ-thống-và-minh-chứng-d-02), [baseline](../../../evidence/D-02/baseline.md), [console](../../../evidence/D-02/console-build-4.txt), [ảnh Stage View hiện có](../../../evidence/D-02/stage-build-view.png). Quyết định nhóm và xác nhận review cần ghi sau khi trao đổi thực sự diễn ra.

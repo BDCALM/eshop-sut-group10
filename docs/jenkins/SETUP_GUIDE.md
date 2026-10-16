@@ -1,6 +1,6 @@
 # Hướng dẫn setup Jenkins
 
-Tài liệu gồm hai phần: (A) dựng Jenkins controller và cài plugin, (B) dựng agent thực thi job có Git, Node/npm và npm cache. Cách xem stage và báo cáo pipeline được trình bày trong [hướng dẫn báo cáo](reports.md).
+Tài liệu gồm ba phần: (A) dựng Jenkins controller và cài plugin, (B) dựng agent có Git, Node/npm và npm cache, (C) tạo Multibranch Pipeline, lấy source và chạy build. Cách xem stage và báo cáo pipeline được trình bày trong [hướng dẫn báo cáo](reports.md).
 
 ## Thành phần
 
@@ -174,6 +174,92 @@ Bước này hoàn tất khi agent Online, các lệnh kiểm tra phiên bản c
 
 Jenkinsfile và phần publish báo cáo được cấu hình trong repo. Xem [hướng dẫn mở Stages, Test Results và Coverage](reports.md) để theo dõi build trên giao diện thay vì đọc raw JSON/XML. Các build cũ không tự có báo cáo mới; cần chạy build từ commit chứa cấu hình publisher.
 
+## Phần C — Tạo và chạy Multibranch Pipeline (D-02)
+
+### 10. Chuẩn bị mã nguồn và quyền truy cập
+
+- Controller chạy, agent `eshop-agent` Online với label `eshop-node`; các bước phần A/B đã hoàn tất.
+- Repo dùng cho Jenkins hiện tại là `https://github.com/SUT-group10/eshop-sut-group10.git`. Repo trước đây được nhắc dưới tài khoản `BDCALM`; khi dựng lại dùng URL organization hiện tại.
+- Nhánh `cicd/jenkins` đã push và có file tên chính xác **`Jenkinsfile`** ở thư mục gốc. `main` chưa có file này thì scan báo không đạt tiêu chí cho `main` là bình thường.
+- Commit cả `backend/package.json` và `backend/package-lock.json` nếu thay đổi dependency/reporter. Job tải source trên GitHub, không tự đọc thay đổi chưa push trong thư mục Windows.
+
+Nên cấu hình credential cho GitHub API để tránh quota anonymous thấp. Chỉ có quyền Settings của repo hoặc đang đăng nhập GitHub trên Windows không tự cấp credential cho Jenkins trong container.
+
+### 11. Lưu GitHub credential vào Jenkins
+
+Trên GitHub, tạo PAT có quyền đọc đúng repo. Nếu dùng fine-grained token, chọn resource owner `SUT-group10`, repo `eshop-sut-group10`, Contents/Metadata/Pull requests read; thêm Commit statuses read/write nếu Jenkins gửi trạng thái build về GitHub. Organization có thể yêu cầu duyệt token/quyền. Token chỉ có “Access on” tài khoản cá nhân và Public repositories read-only không ghi được status cho repo organization.
+
+Nếu dùng PAT classic cho repo public như cấu hình hiện tại, `repo:status` cho phép gửi commit status; việc quản lý webhook bằng tay không đòi hỏi cấp quyền admin webhook cho token này. Repo private cần quyền đọc tương ứng. Chính sách organization có thể giới hạn loại token hoặc yêu cầu ủy quyền bổ sung. Không cấp quyền rộng chỉ để thử hết các ô.
+
+Trong Jenkins, vào **Manage Jenkins → Credentials → System → Global credentials → Add Credentials**:
+
+| Trường | Giá trị |
+| --- | --- |
+| Kind | Username with password |
+| Scope | Global |
+| Username | Username GitHub sở hữu token |
+| Password | PAT, không phải mật khẩu GitHub |
+| ID | `github-eshop-pat` (ID đang được job dùng) |
+| Description | GitHub access for EShop CI |
+
+Nếu credential này đã có, chọn Update để thay token khi cần, không tạo nhiều credential trùng mục đích. Token được nhập trực tiếp vào Jenkins; không lưu vào repo, Jenkinsfile, ảnh hay tài liệu. Token GitHub, webhook secret và agent secret có ba mục đích khác nhau.
+
+### 12. Tạo job và cấu hình source
+
+Nếu job `eshop-ci` đã tồn tại thì chọn **Configure**, không tạo job trùng. Khi dựng mới:
+
+1. Từ dashboard chọn **New Item**, đặt tên `eshop-ci`, chọn **Multibranch Pipeline**, OK.
+2. **Branch Sources → Add source → GitHub**.
+3. Chọn credential `github-eshop-pat` ngay tại Branch Source; chỉ tạo credential ở trang quản trị mà không chọn vào job thì scan vẫn có thể anonymous.
+4. Repository HTTPS URL: `https://github.com/SUT-group10/eshop-sut-group10.git`. Nếu giao diện tách trường, owner là `SUT-group10`, repository là `eshop-sut-group10`.
+5. Trong Behaviours giữ **Discover branches**; chọn **All branches** cho cấu hình D-02 đơn giản. Không đặt bộ lọc tên nhánh loại `cicd/jenkins`. Discover PRs là phần mở rộng, không bắt buộc để chạy tay nhánh D-02.
+6. Build Configuration: **by Jenkinsfile**; Script Path: **`Jenkinsfile`**, không phải `backend/Jenkinsfile`.
+7. Save.
+
+Đây là hướng dẫn cấu hình tối thiểu để dựng lại. Job hiện hữu có thể còn các behaviour discovery PR mặc định; phải ghi rõ nếu dùng chúng trong thí nghiệm đối chiếu.
+
+### 13. Scan và chạy Build Now
+
+1. Trong job Multibranch `eshop-ci`, chọn **Scan Multibranch Pipeline Now**.
+2. Mở Scan Log, xác nhận đang dùng credential, đọc đúng owner/repo; nhánh `cicd/jenkins` có `Jenkinsfile` và đạt criteria.
+3. Sau khi phát hiện, Jenkins tạo job con `cicd/jenkins`. Scan đầu có thể tự tạo build.
+4. Mở **job con** `cicd/jenkins`, chọn **Build Now** khi cần chạy tay. Scan lại commit không đổi không đảm bảo tạo một build mới.
+5. Mở build mới → Console Output; đối chiếu SHA ở Environment với commit cần chạy. Xem [baseline build #4](../evidence/D-02/baseline.md) làm ví dụ đã kiểm chứng.
+
+Pipeline lấy mã nguồn từ SCM của chính job bằng `checkout scm`, sau khi dọn workspace. Các bước npm chạy trong `backend/` trên Linux agent; không cần mở backend/frontend hoặc database riêng trước Jest. Harness tự quản lý Express/SQLite trong bộ nhớ.
+
+Luồng gồm sáu stage:
+
+```text
+Checkout → Environment → Install → Lint → Build → Tests
+```
+
+Install dùng `npm ci`; Lint dùng `npm run lint`; Build dùng `npm run build` để kiểm tra cú pháp; Tests dùng `npm run test:ci` cho toàn bộ unit/API/smoke/harness. Lệnh lỗi giữ exit code, làm stage/build fail. Với baseline hiện có, 10 assertion SUT fail là kết quả được giữ nguyên, không phải lý do thay expected hoặc bỏ test.
+
+### 14. Xem giao diện và lưu minh chứng
+
+- Bảng ô màu ngay trang job nhánh cần **Pipeline: Stage View** (`pipeline-stage-view`). Plugin này đã được cài trong môi trường đang dùng; khi dựng volume mới cần cài lại nếu muốn cùng giao diện.
+- Menu **Stages** / **Pipeline Overview** dùng Pipeline Graph View; mở đúng trang nhánh hoặc trang build theo [hướng dẫn báo cáo](reports.md).
+- Build từ commit chứa reporter/publisher có Test Results và Coverage. Các build cũ không tự có report mới.
+- Lưu console đầy đủ từ Console Output → View as plain text/Download nếu giao diện có. Có thể lấy trực tiếp file console của build từ Jenkins volume; phải ghi phương pháp xuất, không giả là một lần tải qua trình duyệt.
+- Khi chụp Stage View, giữ tên job/nhánh, số build và đủ sáu stage. Dùng cùng build với baseline, JSON và log.
+
+Minh chứng D-02 hiện tại: [baseline](../evidence/D-02/baseline.md), [console build #4](../evidence/D-02/console-build-4.txt), [mục nhóm/sinh viên cần điền](../evidence/D-02/group-decision.md).
+
+### 15. Chẩn đoán bước scan/build cơ bản
+
+| Hiện tượng | Kiểm tra / xử lý |
+| --- | --- |
+| `main: Jenkinsfile not found` | Nếu file chỉ có trên `cicd/jenkins`, tiếp tục xem kết quả nhánh đó; không cần chuyển file sang main để chạy D-02. |
+| Không xuất hiện job nhánh | Xem scan đã hoàn tất chưa; kiểm tra repo/nhánh, discovery/filter, quyền đọc và Script Path. |
+| `anonymous access`, API limiter ngủ nhiều phút | Kiểm tra đã chọn credential trong Branch Sources. Trong Manage Jenkins → System → GitHub API usage, có thể chọn `Throttle at/near rate limit` thay vì chia đều request; không tắt bảo vệ quota. |
+| Vừa thêm token nhưng build cũ còn anonymous | Lượt cũ có thể đã tạo client trước khi đổi credential. Dừng lượt đang kẹt rồi Build Now trên job nhánh để kiểm chứng lượt mới; không cần xóa job/volume. |
+| `Still waiting to schedule task` | Kiểm tra agent Online và label `eshop-node`; timeout top-level của pipeline không bao gồm thời gian chờ cấp agent. |
+| GitHub commit status trả 403 | Kiểm tra token đúng owner/repo, quyền Commit statuses write và trạng thái duyệt/ủy quyền của organization; đọc repo được không đồng nghĩa gửi status được. |
+| Tests đỏ, 39 test / 10 fail | Đối chiếu từng ID với baseline; chưa được mặc định mọi fail mới là bug cũ. |
+
+Webhook/ngrok dùng khi muốn push tự kích hoạt. **Không phải điều kiện để Scan và Build Now chạy được** trong D-02. Trạng thái commit trên GitHub là chiều Jenkins gửi kết quả qua API/token, độc lập với chiều GitHub gửi webhook tới Jenkins.
+
 ## Tham khảo
 
 - [Cài Jenkins bằng Docker](https://www.jenkins.io/doc/book/installing/docker/).
@@ -182,3 +268,6 @@ Jenkinsfile và phần publish báo cáo được cấu hình trong repo. Xem [h
 - [Quản lý plugin Jenkins](https://www.jenkins.io/doc/book/managing/plugins/).
 - [JUnit step](https://www.jenkins.io/doc/pipeline/steps/junit/)
 - [Coverage plugin](https://plugins.jenkins.io/coverage/).
+- [Jenkins Pipeline as Code và credential cho GitHub](https://www.jenkins.io/doc/book/pipeline/pipeline-as-code/).
+- [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+- [GitHub commit status](https://docs.github.com/en/rest/commits/statuses).

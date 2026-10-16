@@ -1,0 +1,779 @@
+Started by user Nguyen Khac Vuong
+Connecting to https://api.github.com using vinny2707/****** (GitHub access for EShop CI)
+Obtained Jenkinsfile from a559c53acb9a3b03cc05fca8a855bcc59c8eaae8
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on eshop-agent in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] deleteDir
+[Pipeline] checkout
+[2026-10-16T13:04:42.280Z] The recommended git tool is: NONE
+[2026-10-16T13:04:42.289Z] using credential github-eshop-pat
+[2026-10-16T13:04:42.301Z] Cloning the remote Git repository
+[2026-10-16T13:04:42.301Z] Cloning with configured refspecs honoured and without tags
+[2026-10-16T13:04:42.304Z] Cloning repository https://github.com/SUT-group10/eshop-sut-group10.git
+[2026-10-16T13:04:42.305Z]  > git init /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins # timeout=10
+[2026-10-16T13:04:42.328Z] Fetching upstream changes from https://github.com/SUT-group10/eshop-sut-group10.git
+[2026-10-16T13:04:42.328Z]  > git --version # timeout=10
+[2026-10-16T13:04:42.336Z]  > git --version # 'git version 2.47.3'
+[2026-10-16T13:04:42.337Z] using GIT_ASKPASS to set credentials GitHub access for EShop CI
+[2026-10-16T13:04:42.343Z]  > git fetch --no-tags --force --progress -- https://github.com/SUT-group10/eshop-sut-group10.git +refs/heads/cicd/jenkins:refs/remotes/origin/cicd/jenkins # timeout=10
+[2026-10-16T13:04:43.845Z] Avoid second fetch
+[2026-10-16T13:04:43.846Z] Checking out Revision a559c53acb9a3b03cc05fca8a855bcc59c8eaae8 (cicd/jenkins)
+[2026-10-16T13:04:43.889Z] Commit message: "ci(D-03): publish Jenkins test and coverage reports"
+[2026-10-16T13:04:43.831Z]  > git config remote.origin.url https://github.com/SUT-group10/eshop-sut-group10.git # timeout=10
+[2026-10-16T13:04:43.836Z]  > git config --add remote.origin.fetch +refs/heads/cicd/jenkins:refs/remotes/origin/cicd/jenkins # timeout=10
+[2026-10-16T13:04:43.848Z]  > git config core.sparsecheckout # timeout=10
+[2026-10-16T13:04:43.852Z]  > git checkout -f a559c53acb9a3b03cc05fca8a855bcc59c8eaae8 # timeout=10
+[2026-10-16T13:04:43.891Z]  > git rev-list --no-walk a559c53acb9a3b03cc05fca8a855bcc59c8eaae8 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Environment)
+[Pipeline] dir
+[2026-10-16T13:04:45.282Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] sh
+[2026-10-16T13:04:45.587Z] branch: cicd/jenkins
+[2026-10-16T13:04:45.587Z] commit: a559c53acb9a3b03cc05fca8a855bcc59c8eaae8
+[2026-10-16T13:04:45.587Z] build:  jenkins-eshop-ci-cicd%2Fjenkins-4
+[2026-10-16T13:04:45.587Z] node:   v24.14.0
+[2026-10-16T13:04:45.845Z] npm:    11.9.0
+[2026-10-16T13:04:45.845Z] git:    git version 2.47.3
+[2026-10-16T13:04:45.845Z] os:     Debian GNU/Linux 13 (trixie)
+[2026-10-16T13:04:45.845Z] kernel: Linux 6.6.87.2-microsoft-standard-WSL2 x86_64
+[2026-10-16T13:04:45.845Z] npm cache: /home/jenkins/.npm
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install)
+[Pipeline] dir
+[2026-10-16T13:04:45.962Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] sh
+[2026-10-16T13:04:48.540Z] npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+[2026-10-16T13:04:49.103Z] npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+[2026-10-16T13:04:51.001Z] 
+[2026-10-16T13:04:51.001Z] added 487 packages in 5s
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Lint)
+[Pipeline] dir
+[2026-10-16T13:04:51.149Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] sh
+[2026-10-16T13:04:51.471Z] 
+[2026-10-16T13:04:51.471Z] > backend@1.0.0 lint
+[2026-10-16T13:04:51.471Z] > eslint . --max-warnings=0
+[2026-10-16T13:04:51.471Z] 
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] dir
+[2026-10-16T13:04:52.156Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] sh
+[2026-10-16T13:04:52.461Z] 
+[2026-10-16T13:04:52.461Z] > backend@1.0.0 build
+[2026-10-16T13:04:52.461Z] > node scripts/check-syntax.cjs
+[2026-10-16T13:04:52.461Z] 
+[2026-10-16T13:04:52.461Z] PASS database.js
+[2026-10-16T13:04:52.461Z] PASS eslint.config.cjs
+[2026-10-16T13:04:52.461Z] PASS jest.config.cjs
+[2026-10-16T13:04:52.461Z] PASS scripts/check-syntax.cjs
+[2026-10-16T13:04:52.461Z] PASS scripts/verify-isolation.cjs
+[2026-10-16T13:04:52.717Z] PASS server.js
+[2026-10-16T13:04:52.717Z] PASS test_profile.js
+[2026-10-16T13:04:52.717Z] PASS tests/api/cart-orders.test.js
+[2026-10-16T13:04:52.717Z] PASS tests/api/catalog-auth.test.js
+[2026-10-16T13:04:52.717Z] PASS tests/api/coupons.test.js
+[2026-10-16T13:04:52.717Z] PASS tests/harness/isolation.test.js
+[2026-10-16T13:04:52.717Z] PASS tests/helpers/harness.js
+[2026-10-16T13:04:52.717Z] PASS tests/smoke/purchase.test.js
+[2026-10-16T13:04:52.717Z] PASS tests/unit/authentication.test.js
+[2026-10-16T13:04:52.717Z] Source syntax validation: 14 files, PASS
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Tests)
+[Pipeline] dir
+[2026-10-16T13:04:52.840Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] sh
+[2026-10-16T13:04:53.149Z] 
+[2026-10-16T13:04:53.149Z] > backend@1.0.0 test:ci
+[2026-10-16T13:04:53.149Z] > jest --ci --runInBand --coverage --reporters=default --reporters=jest-junit --json --outputFile=test-results/results.json
+[2026-10-16T13:04:53.149Z] 
+[2026-10-16T13:04:54.083Z] FAIL tests/api/cart-orders.test.js
+[2026-10-16T13:04:54.083Z]   ● Console
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     console.log
+[2026-10-16T13:04:54.083Z]       Connected to database
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]   ● API: cart, checkout and orders › A-CART-03 repeated products merge into one line (FR-07)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     expect(received).toHaveLength(expected)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     Expected length: 1
+[2026-10-16T13:04:54.083Z]     Received length: 2
+[2026-10-16T13:04:54.083Z]     Received array:  [{"category_id": 1, "description": "Điện thoại cao cấp của Apple", "id": 1, "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15", "name": "iPhone 15 Pro Max", "price": 30000000, "quantity": 1}, {"category_id": 1, "description": "Điện thoại cao cấp của Apple", "id": 1, "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15", "name": "iPhone 15 Pro Max", "price": 30000000, "quantity": 2}]
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       38 |     await addProduct(2);
+[2026-10-16T13:04:54.083Z]       39 |     const response = await call('get', '/api/cart');
+[2026-10-16T13:04:54.083Z]     > 40 |     expect(response.body).toHaveLength(1);
+[2026-10-16T13:04:54.083Z]          |                           ^
+[2026-10-16T13:04:54.083Z]       41 |     expect(response.body[0].quantity).toBe(3);
+[2026-10-16T13:04:54.083Z]       42 |   });
+[2026-10-16T13:04:54.083Z]       43 |
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Object.toHaveLength (tests/api/cart-orders.test.js:40:27)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]   ● API: cart, checkout and orders › A-CHECKOUT-02 computes the total instead of trusting the client (FR-08)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     expect(received).toBe(expected) // Object.is equality
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     Expected: 60000000
+[2026-10-16T13:04:54.083Z]     Received: 1
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       56 |     expect(response.status).toBe(200);
+[2026-10-16T13:04:54.083Z]       57 |     const order = await harness.get('SELECT * FROM orders WHERE id = ?', [response.body.orderId]);
+[2026-10-16T13:04:54.083Z]     > 58 |     expect(order.total_amount).toBe(product.price * 2);
+[2026-10-16T13:04:54.083Z]          |                                ^
+[2026-10-16T13:04:54.083Z]       59 |   });
+[2026-10-16T13:04:54.083Z]       60 |
+[2026-10-16T13:04:54.083Z]       61 |   test('A-CHECKOUT-03 clears the cart after successful checkout (FR-08)', async () => {
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Object.toBe (tests/api/cart-orders.test.js:58:32)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]   ● API: cart, checkout and orders › A-CHECKOUT-03 clears the cart after successful checkout (FR-08)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     expect(received).toEqual(expected) // deep equality
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     - Expected  -  1
+[2026-10-16T13:04:54.083Z]     + Received  + 11
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     - Array []
+[2026-10-16T13:04:54.083Z]     + Array [
+[2026-10-16T13:04:54.083Z]     +   Object {
+[2026-10-16T13:04:54.083Z]     +     "category_id": 1,
+[2026-10-16T13:04:54.083Z]     +     "description": "Điện thoại cao cấp của Apple",
+[2026-10-16T13:04:54.083Z]     +     "id": 1,
+[2026-10-16T13:04:54.083Z]     +     "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15",
+[2026-10-16T13:04:54.083Z]     +     "name": "iPhone 15 Pro Max",
+[2026-10-16T13:04:54.083Z]     +     "price": 30000000,
+[2026-10-16T13:04:54.083Z]     +     "quantity": 1,
+[2026-10-16T13:04:54.083Z]     +   },
+[2026-10-16T13:04:54.083Z]     + ]
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       66 |     const cart = await call('get', '/api/cart');
+[2026-10-16T13:04:54.083Z]       67 |     expect(cart.status).toBe(200);
+[2026-10-16T13:04:54.083Z]     > 68 |     expect(cart.body).toEqual([]);
+[2026-10-16T13:04:54.083Z]          |                       ^
+[2026-10-16T13:04:54.083Z]       69 |   });
+[2026-10-16T13:04:54.083Z]       70 |
+[2026-10-16T13:04:54.083Z]       71 |   test('A-ORDER-01 history includes only the current user orders (FR-11)', async () => {
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Object.toEqual (tests/api/cart-orders.test.js:68:23)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]   ● API: cart, checkout and orders › A-ORDER-03 user cannot cancel a shipping order (FR-10)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     expect(received).toBeGreaterThanOrEqual(expected)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     Expected: >= 400
+[2026-10-16T13:04:54.083Z]     Received:    200
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       89 |     const id = await createOrder('shipping');
+[2026-10-16T13:04:54.083Z]       90 |     const response = await call('put', `/api/orders/${id}/cancel`);
+[2026-10-16T13:04:54.083Z]     > 91 |     expect(response.status).toBeGreaterThanOrEqual(400);
+[2026-10-16T13:04:54.083Z]          |                             ^
+[2026-10-16T13:04:54.083Z]       92 |     expect(response.status).toBeLessThan(500);
+[2026-10-16T13:04:54.083Z]       93 |     expect((await harness.get('SELECT status FROM orders WHERE id = ?', [id])).status).toBe('shipping');
+[2026-10-16T13:04:54.083Z]       94 |   });
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Object.toBeGreaterThanOrEqual (tests/api/cart-orders.test.js:91:29)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]   ● API: cart, checkout and orders › A-ORDER-04 canceled is a final state even for admin (FR-10)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     expect(received).toBeGreaterThanOrEqual(expected)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]     Expected: >= 400
+[2026-10-16T13:04:54.083Z]     Received:    200
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]        99 |     const response = await request(harness.app).put(`/api/admin/orders/${id}/status`)
+[2026-10-16T13:04:54.083Z]       100 |       .auth(admin.token, { type: 'bearer' }).send({ status: 'delivered' });
+[2026-10-16T13:04:54.083Z]     > 101 |     expect(response.status).toBeGreaterThanOrEqual(400);
+[2026-10-16T13:04:54.083Z]           |                             ^
+[2026-10-16T13:04:54.083Z]       102 |     expect(response.status).toBeLessThan(500);
+[2026-10-16T13:04:54.083Z]       103 |     expect((await harness.get('SELECT status FROM orders WHERE id = ?', [id])).status).toBe('canceled');
+[2026-10-16T13:04:54.083Z]       104 |   });
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.083Z]       at Object.toBeGreaterThanOrEqual (tests/api/cart-orders.test.js:101:29)
+[2026-10-16T13:04:54.083Z] 
+[2026-10-16T13:04:54.650Z] FAIL tests/api/coupons.test.js
+[2026-10-16T13:04:54.650Z]   ● Console
+[2026-10-16T13:04:54.650Z] 
+[2026-10-16T13:04:54.650Z]     console.log
+[2026-10-16T13:04:54.650Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.650Z] 
+[2026-10-16T13:04:54.650Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.650Z] 
+[2026-10-16T13:04:54.650Z]     console.log
+[2026-10-16T13:04:54.650Z]       Connected to database
+[2026-10-16T13:04:54.650Z] 
+[2026-10-16T13:04:54.650Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.650Z] 
+[2026-10-16T13:04:54.650Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     console.log
+[2026-10-16T13:04:54.651Z]       Connected to database
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]   ● API: coupon conditions and formulas (FR-09) › A-COUPON-05 accepts the exact minimum and computes the fixed discount (C3)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     expect(received).toBe(expected) // Object.is equality
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     Expected: 200
+[2026-10-16T13:04:54.651Z]     Received: 400
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       38 |   test('A-COUPON-05 accepts the exact minimum and computes the fixed discount (C3)', async () => {
+[2026-10-16T13:04:54.651Z]       39 |     const response = await apply('BIGBUY', 500000);
+[2026-10-16T13:04:54.651Z]     > 40 |     expect(response.status).toBe(200);
+[2026-10-16T13:04:54.651Z]          |                             ^
+[2026-10-16T13:04:54.651Z]       41 |     expect(response.body).toMatchObject({ discount_amount: 50000, final_amount: 450000 });
+[2026-10-16T13:04:54.651Z]       42 |   });
+[2026-10-16T13:04:54.651Z]       43 |
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Object.toBe (tests/api/coupons.test.js:40:29)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]   ● API: coupon conditions and formulas (FR-09) › A-COUPON-07 rejects an anonymous request even with user_id (C4)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     expect(received).toBeGreaterThanOrEqual(expected)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     Expected: >= 400
+[2026-10-16T13:04:54.651Z]     Received:    200
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       13 | }
+[2026-10-16T13:04:54.651Z]       14 | function expectClientError(response) {
+[2026-10-16T13:04:54.651Z]     > 15 |   expect(response.status).toBeGreaterThanOrEqual(400);
+[2026-10-16T13:04:54.651Z]          |                           ^
+[2026-10-16T13:04:54.651Z]       16 |   expect(response.status).toBeLessThan(500);
+[2026-10-16T13:04:54.651Z]       17 |   expect(response.body.error).toEqual(expect.any(String));
+[2026-10-16T13:04:54.651Z]       18 | }
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at toBeGreaterThanOrEqual (tests/api/coupons.test.js:15:27)
+[2026-10-16T13:04:54.651Z]       at Object.expectClientError (tests/api/coupons.test.js:51:5)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]   ● API: coupon conditions and formulas (FR-09) › A-COUPON-09 computes ten percent of the total
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     expect(received).toMatchObject(expected)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]     - Expected  - 2
+[2026-10-16T13:04:54.651Z]     + Received  + 2
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       Object {
+[2026-10-16T13:04:54.651Z]     -   "discount_amount": 50000,
+[2026-10-16T13:04:54.651Z]     -   "final_amount": 450000,
+[2026-10-16T13:04:54.651Z]     +   "discount_amount": -4500000,
+[2026-10-16T13:04:54.651Z]     +   "final_amount": 5000000,
+[2026-10-16T13:04:54.651Z]       }
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       60 |     const response = await apply('SAVE10', 500000);
+[2026-10-16T13:04:54.651Z]       61 |     expect(response.status).toBe(200);
+[2026-10-16T13:04:54.651Z]     > 62 |     expect(response.body).toMatchObject({ discount_amount: 50000, final_amount: 450000 });
+[2026-10-16T13:04:54.651Z]          |                           ^
+[2026-10-16T13:04:54.651Z]       63 |   });
+[2026-10-16T13:04:54.651Z]       64 | });
+[2026-10-16T13:04:54.651Z]       65 |
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.651Z]       at Object.toMatchObject (tests/api/coupons.test.js:62:27)
+[2026-10-16T13:04:54.651Z] 
+[2026-10-16T13:04:54.907Z] FAIL tests/api/catalog-auth.test.js
+[2026-10-16T13:04:54.907Z]   ● Console
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Connected to database
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.907Z] 
+[2026-10-16T13:04:54.907Z]     console.log
+[2026-10-16T13:04:54.907Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     console.log
+[2026-10-16T13:04:54.908Z]       Connected to database
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     console.log
+[2026-10-16T13:04:54.908Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     console.log
+[2026-10-16T13:04:54.908Z]       Connected to database
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]   ● API: catalog and authentication › A-AUTH-03 each failed login increments the counter by exactly one (FR-02)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     expect(received).toBe(expected) // Object.is equality
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     Expected: 1
+[2026-10-16T13:04:54.908Z]     Received: 2
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       49 |       .send({ email: 'test@eshop.com', password: 'wrong-password' });
+[2026-10-16T13:04:54.908Z]       50 |     const row = await harness.get('SELECT login_attempts FROM users WHERE email = ?', ['test@eshop.com']);
+[2026-10-16T13:04:54.908Z]     > 51 |     expect(row.login_attempts).toBe(1);
+[2026-10-16T13:04:54.908Z]          |                                ^
+[2026-10-16T13:04:54.908Z]       52 |   });
+[2026-10-16T13:04:54.908Z]       53 |
+[2026-10-16T13:04:54.908Z]       54 |   test.each([
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Object.toBe (tests/api/catalog-auth.test.js:51:32)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]   ● API: catalog and authentication › A-ACCESS-02 user cannot read admin users (FR-12)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     expect(received).toBeGreaterThanOrEqual(expected)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]     Expected: >= 400
+[2026-10-16T13:04:54.908Z]     Received:    200
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       67 |     const user = await harness.login();
+[2026-10-16T13:04:54.908Z]       68 |     const response = await request(harness.app).get('/api/admin/users').auth(user.token, { type: 'bearer' });
+[2026-10-16T13:04:54.908Z]     > 69 |     expect(response.status).toBeGreaterThanOrEqual(400);
+[2026-10-16T13:04:54.908Z]          |                             ^
+[2026-10-16T13:04:54.908Z]       70 |     expect(response.status).toBeLessThan(500);
+[2026-10-16T13:04:54.908Z]       71 |   });
+[2026-10-16T13:04:54.908Z]       72 |
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:54.908Z]       at Object.toBeGreaterThanOrEqual (tests/api/catalog-auth.test.js:69:29)
+[2026-10-16T13:04:54.908Z] 
+[2026-10-16T13:04:55.163Z] PASS tests/harness/isolation.test.js
+[2026-10-16T13:04:55.163Z]   ● Console
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z] PASS tests/smoke/purchase.test.js
+[2026-10-16T13:04:55.163Z]   ● Console
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Database initialized and seeded (Phase 2).
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:113:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]     console.log
+[2026-10-16T13:04:55.163Z]       Connected to database
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.163Z]       at Database.log (database.js:9:17)
+[2026-10-16T13:04:55.163Z] 
+[2026-10-16T13:04:55.422Z] PASS tests/unit/authentication.test.js
+[2026-10-16T13:04:55.422Z] 
+[2026-10-16T13:04:55.422Z] =============================== Coverage summary ===============================
+[2026-10-16T13:04:55.422Z] Statements   : 57.98% ( 178/307 )
+[2026-10-16T13:04:55.422Z] Branches     : 39.09% ( 52/133 )
+[2026-10-16T13:04:55.422Z] Functions    : 39.72% ( 29/73 )
+[2026-10-16T13:04:55.422Z] Lines        : 61.48% ( 174/283 )
+[2026-10-16T13:04:55.422Z] ================================================================================
+[2026-10-16T13:04:55.422Z] 
+[2026-10-16T13:04:55.422Z] Test Suites: 3 failed, 3 passed, 6 total
+[2026-10-16T13:04:55.422Z] Tests:       10 failed, 29 passed, 39 total
+[2026-10-16T13:04:55.422Z] Snapshots:   0 total
+[2026-10-16T13:04:55.422Z] Time:        1.96 s, estimated 2 s
+[2026-10-16T13:04:55.422Z] Ran all test suites.
+[2026-10-16T13:04:55.422Z] Test results written to: test-results/results.json
+[Pipeline] }
+[Pipeline] // dir
+Post stage
+[Pipeline] dir
+[2026-10-16T13:04:55.493Z] Running in /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] junit
+[2026-10-16T13:04:55.554Z] Recording test results
+[Pipeline] recordCoverage
+[2026-10-16T13:04:55.644Z] [Coverage] Recording coverage results
+[2026-10-16T13:04:55.644Z] [Coverage] Creating parser for Cobertura Coverage Reports
+[2026-10-16T13:04:55.644Z] [Coverage] Searching for all files in '/home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend' that match the pattern 'coverage/cobertura-coverage.xml'
+[2026-10-16T13:04:55.644Z] [Coverage] Traversing of symbolic links: enabled
+[2026-10-16T13:04:55.644Z] [Coverage] -> found 1 file
+[2026-10-16T13:04:55.644Z] [Coverage] Successfully parsed file '/home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/coverage/cobertura-coverage.xml'
+[2026-10-16T13:04:55.644Z] [Coverage] Module Coverage: 100.00% (1/1)
+[2026-10-16T13:04:55.644Z] [Coverage] Package Coverage: 100.00% (1/1)
+[2026-10-16T13:04:55.644Z] [Coverage] File Coverage: 100.00% (2/2)
+[2026-10-16T13:04:55.644Z] [Coverage] Class Coverage: 100.00% (2/2)
+[2026-10-16T13:04:55.644Z] [Coverage] Method Coverage: 39.73% (29/73)
+[2026-10-16T13:04:55.644Z] [Coverage] Line Coverage: 61.48% (174/283)
+[2026-10-16T13:04:55.644Z] [Coverage] Branch Coverage: 41.74% (48/115)
+[2026-10-16T13:04:55.644Z] [Coverage] Lines of Code: 283
+[2026-10-16T13:04:55.644Z] [Coverage] Successfully processed file 'coverage/cobertura-coverage.xml'
+[2026-10-16T13:04:55.653Z] [Coverage] Resolving source code files...
+[2026-10-16T13:04:55.653Z] [Coverage] Searching for source code files in:
+[2026-10-16T13:04:55.653Z] [Coverage] -> /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/src/main/java
+[2026-10-16T13:04:55.653Z] [Coverage] -> /home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/
+[2026-10-16T13:04:55.653Z] [Coverage] -> resolved absolute paths for all 2 source files
+[2026-10-16T13:04:55.751Z] [Coverage] Obtaining result action of reference build
+[2026-10-16T13:04:55.751Z] [Coverage] Reference build recorder is not configured
+[2026-10-16T13:04:55.751Z] [Coverage] -> Found no reference build
+[2026-10-16T13:04:55.751Z] [Coverage] No quality gates have been set - skipping
+[2026-10-16T13:04:55.751Z] [Coverage] Executing source code painting...
+[2026-10-16T13:04:55.751Z] [Coverage] Painting 2 source files on agent
+[2026-10-16T13:04:55.751Z] [Coverage] -> finished painting successfully
+[2026-10-16T13:04:55.751Z] [Coverage] -> zipping sources from folder '/home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/coverage-sources-.tmp2112454341570269039/coverage' as '/home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/coverage-sources-coverage.zip'
+[2026-10-16T13:04:55.751Z] [Coverage] -> deleted temporary source folder '/home/jenkins/agent/workspace/eshop-ci_cicd_jenkins/backend/coverage-sources-.tmp2112454341570269039'
+[2026-10-16T13:04:55.751Z] [Coverage] Copying painted sources from agent to build folder
+[2026-10-16T13:04:55.751Z] [Coverage] -> extracting...
+[2026-10-16T13:04:55.751Z] [Coverage] -> done
+[2026-10-16T13:04:55.751Z] [Coverage] Skipping cleaning of source code files in old builds
+[2026-10-16T13:04:55.751Z] [Coverage] Finished coverage processing - adding the action to the build...
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+[2026-10-16T13:04:55.931Z] Archiving artifacts
+[2026-10-16T13:04:55.949Z] Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+
+GitHub has been notified of this commit’s build result
+
+Finished: FAILURE

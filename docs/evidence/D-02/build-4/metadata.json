@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "collectedOn": "2026-10-16",
+  "timezone": "Asia/Bangkok",
+  "repository": "https://github.com/SUT-group10/eshop-sut-group10.git",
+  "branch": "cicd/jenkins",
+  "commit": "a559c53acb9a3b03cc05fca8a855bcc59c8eaae8",
+  "job": "eshop-ci/cicd%2Fjenkins",
+  "buildNumber": 4,
+  "localBuildUrl": "http://localhost:8080/job/eshop-ci/job/cicd%252Fjenkins/4/",
+  "result": "FAILURE",
+  "timestampMs": 1792155878633,
+  "startedAtUtc": "2026-10-16T13:04:38.6330000+00:00",
+  "startedAtUtcPlus07": "2026-10-16T20:04:38.6330000+07:00",
+  "finishedAtUtcPlus07": "2026-10-16T20:04:56.2330000+07:00",
+  "durationMs": 17600,
+  "jestElapsedSeconds": 1.96,
+  "runtime": {
+    "npm": "11.9.0",
+    "node": "v24.14.0",
+    "git": "2.47.3",
+    "agentLabel": "eshop-node",
+    "os": "Debian GNU/Linux 13 (trixie)"
+  },
+  "tests": {
+    "total": 39,
+    "suites": 6,
+    "passed": 29,
+    "failedIds": [
+      "A-ACCESS-02",
+      "A-AUTH-03",
+      "A-CART-03",
+      "A-CHECKOUT-02",
+      "A-CHECKOUT-03",
+      "A-COUPON-05",
+      "A-COUPON-07",
+      "A-COUPON-09",
+      "A-ORDER-03",
+      "A-ORDER-04"
+    ],
+    "skipped": 0,
+    "failed": 10
+  },
+  "jestCoverage": {
+    "lines": {
+      "total": 283,
+      "covered": 174,
+      "skipped": 0,
+      "pct": 61.48
+    },
+    "statements": {
+      "total": 307,
+      "covered": 178,
+      "skipped": 0,
+      "pct": 57.98
+    },
+    "functions": {
+      "total": 73,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 39.72
+    },
+    "branches": {
+      "total": 133,
+      "covered": 52,
+      "skipped": 0,
+      "pct": 39.09
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "jenkinsCoberturaBranch": {
+    "covered": 48,
+    "source": "console-build-4.txt Coverage plugin output",
+    "pct": 41.74,
+    "total": 115
+  },
+  "b04Comparison": {
+    "jestCiSeconds": 2.443,
+    "node": "v24.14.0",
+    "sameFailedIds": true,
+    "sutTestsFixturesAndJestConfigUnchanged": true,
+    "npm": "11.21.0",
+    "commit": "a7f0923a168b5228920c27be04452c2dfcfe4de7"
+  },
+  "provenance": {
+    "reviewConfirmed": false,
+    "artifacts": "Copied byte-for-byte from build #4 archive",
+    "screenshotPresent": false,
+    "metadata": "Selected non-secret fields from completed Jenkins build.xml and original archived reports",
+    "console": "Complete build log from Jenkins volume; binary ConsoleNote and ANSI formatting removed only",
+    "groupDecisionConfirmed": false
+  }
+}

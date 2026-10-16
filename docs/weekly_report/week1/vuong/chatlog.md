@@ -263,7 +263,7 @@ tôi nên cài bản jenkins bình thường lts hay bản cho phép custom
 #### Prompt (Sinh viên):
 
 ````text
-hiện jacoco plugin có thể bị lôi thì có plugin nào ra report của bộ test không bạn nhỉ
+hiện jacoco plugin có thể bị lỗi thì có plugin nào ra report của bộ test không bạn nhỉ
 ````
 
 #### Phản hồi từ AI (Assistant, trích đoạn nguyên văn):
@@ -338,7 +338,7 @@ Hiện đã kiểm tra:
 #### Prompt (Sinh viên):
 
 ````text
-xóa các file như jenkins file làm thêm đồ đi bạn chỉ cần ở bước setup môi tường thôi
+xóa các file như jenkins file làm thêm đồ đi bạn chỉ cần ở bước setup môi trường thôi
 ````
 
 #### Phản hồi từ AI (Assistant, trích đoạn nguyên văn):
@@ -481,5 +481,3 @@ AI thêm Phần C tạo/chạy Multibranch vào setup guide và link evidence v�
 #### Vai trò và đánh giá của sinh viên:
 
 Tôi yêu cầu AI thu thập phần có thể làm được và chỉ rõ phần cần tôi bổ sung; tôi hỏi lại file được thêm và ảnh cần chụp. Việc xuất log do AI thực hiện bằng Docker, không phải tôi bấm tải qua trình duyệt. Tại lần ghi bổ sung này, repo đã có ảnh `stage-build-view.png`; AI xem và xác nhận hàng #4 có Checkout đến Build xanh, Tests đỏ. AI không tạo/sửa ảnh. Quyết định build xanh và review của Vỹ vẫn chờ xác nhận. Nội dung này là evidence D-02, không phải manual triage E-04 hoặc thực nghiệm mười lượt flaky.
-
-Liên kết: [AI Usage mục 3.10](AI_Usage_Declaration.md#310-tổng-hợp-log-hệ-thống-và-minh-chứng-d-02), [baseline](../../../evidence/D-02/baseline.md), [console](../../../evidence/D-02/console-build-4.txt), [ảnh Stage View hiện có](../../../evidence/D-02/stage-build-view.png). Quyết định nhóm và xác nhận review cần ghi sau khi trao đổi thực sự diễn ra.

@@ -1,0 +1,567 @@
+B-02 verification
+Date: 2026-10-13; timezone Asia/Bangkok (+07:00)
+Environment: Windows, PowerShell, Node.js v24.14.0, npm 11.21.0
+Branch: test/b-02-representative-tests
+Source: working tree containing uncommitted B-02 changes based on 77e1870
+Installation: npm ci --no-audit --no-fund completed with exit code 0 (424 packages).
+SQLite database redirected to :memory: in Jest; production database not opened.
+COMMAND: npm test -- --detectOpenHandles --json --outputFile=<temporary-report>
+
+
+> backend@1.0.0 test
+> jest --runInBand --detectOpenHandles --json --outputFile=<temporary-report>
+
+FAIL tests/api/cart-orders.test.js
+  ● Console
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+  ● API: cart, checkout and orders › A-CART-03 repeated products merge into one line (FR-07)
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"category_id": 1, "description": "Điện thoại cao cấp của Apple", "id": 1, "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15", "name": "iPhone 15 Pro Max", "price": 30000000, "quantity": 1}, {"category_id": 1, "description": "Điện thoại cao cấp của Apple", "id": 1, "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15", "name": "iPhone 15 Pro Max", "price": 30000000, "quantity": 2}]
+
+      40 |     await addProduct(2);
+      41 |     const response = await call('get', '/api/cart');
+    > 42 |     expect(response.body).toHaveLength(1);
+         |                           ^
+      43 |     expect(response.body[0].quantity).toBe(3);
+      44 |   });
+      45 |
+
+      at Object.toHaveLength (tests/api/cart-orders.test.js:42:27)
+
+  ● API: cart, checkout and orders › A-CHECKOUT-02 computes the total instead of trusting the client (FR-08)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 60000000
+    Received: 1
+
+      58 |     expect(response.status).toBe(200);
+      59 |     const order = await harness.get('SELECT * FROM orders WHERE id = ?', [response.body.orderId]);
+    > 60 |     expect(order.total_amount).toBe(product.price * 2);
+         |                                ^
+      61 |   });
+      62 |
+      63 |   test('A-CHECKOUT-03 clears the cart after successful checkout (FR-08)', async () => {
+
+      at Object.toBe (tests/api/cart-orders.test.js:60:32)
+
+  ● API: cart, checkout and orders › A-CHECKOUT-03 clears the cart after successful checkout (FR-08)
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 11
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "category_id": 1,
+    +     "description": "Điện thoại cao cấp của Apple",
+    +     "id": 1,
+    +     "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15",
+    +     "name": "iPhone 15 Pro Max",
+    +     "price": 30000000,
+    +     "quantity": 1,
+    +   },
+    + ]
+
+      68 |     const cart = await call('get', '/api/cart');
+      69 |     expect(cart.status).toBe(200);
+    > 70 |     expect(cart.body).toEqual([]);
+         |                       ^
+      71 |   });
+      72 |
+      73 |   test('A-ORDER-01 history includes only the current user orders (FR-11)', async () => {
+
+      at Object.toEqual (tests/api/cart-orders.test.js:70:23)
+
+  ● API: cart, checkout and orders › A-ORDER-03 user cannot cancel a shipping order (FR-10)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      91 |     const id = await createOrder('shipping');
+      92 |     const response = await call('put', `/api/orders/${id}/cancel`);
+    > 93 |     expect(response.status).toBeGreaterThanOrEqual(400);
+         |                             ^
+      94 |     expect(response.status).toBeLessThan(500);
+      95 |     expect((await harness.get('SELECT status FROM orders WHERE id = ?', [id])).status).toBe('shipping');
+      96 |   });
+
+      at Object.toBeGreaterThanOrEqual (tests/api/cart-orders.test.js:93:29)
+
+  ● API: cart, checkout and orders › A-ORDER-04 canceled is a final state even for admin (FR-10)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      101 |     const response = await request(harness.app).put(`/api/admin/orders/${id}/status`)
+      102 |       .auth(admin.token, { type: 'bearer' }).send({ status: 'delivered' });
+    > 103 |     expect(response.status).toBeGreaterThanOrEqual(400);
+          |                             ^
+      104 |     expect(response.status).toBeLessThan(500);
+      105 |     expect((await harness.get('SELECT status FROM orders WHERE id = ?', [id])).status).toBe('canceled');
+      106 |   });
+
+      at Object.toBeGreaterThanOrEqual (tests/api/cart-orders.test.js:103:29)
+
+FAIL tests/api/catalog-auth.test.js
+  ● Console
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+  ● API: catalog and authentication › A-AUTH-03 each failed login increments the counter by exactly one (FR-02)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      49 |       .send({ email: 'test@eshop.com', password: 'wrong-password' });
+      50 |     const row = await harness.get('SELECT login_attempts FROM users WHERE email = ?', ['test@eshop.com']);
+    > 51 |     expect(row.login_attempts).toBe(1);
+         |                                ^
+      52 |   });
+      53 |
+      54 |   test.each([
+
+      at Object.toBe (tests/api/catalog-auth.test.js:51:32)
+
+  ● API: catalog and authentication › A-ACCESS-02 user cannot read admin users (FR-12)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      67 |     const user = await harness.login();
+      68 |     const response = await request(harness.app).get('/api/admin/users').auth(user.token, { type: 'bearer' });
+    > 69 |     expect(response.status).toBeGreaterThanOrEqual(400);
+         |                             ^
+      70 |     expect(response.status).toBeLessThan(500);
+      71 |   });
+      72 |
+
+      at Object.toBeGreaterThanOrEqual (tests/api/catalog-auth.test.js:69:29)
+
+FAIL tests/api/coupons.test.js
+  ● Console
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+    console.log
+      Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+    console.log
+      Connected to database
+
+      at Database.log (database.js:9:17)
+
+  ● API: coupon conditions and formulas (FR-09) › A-COUPON-05 accepts the exact minimum and computes the fixed discount (C3)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      38 |   test('A-COUPON-05 accepts the exact minimum and computes the fixed discount (C3)', async () => {
+      39 |     const response = await apply('BIGBUY', 500000);
+    > 40 |     expect(response.status).toBe(200);
+         |                             ^
+      41 |     expect(response.body).toMatchObject({ discount_amount: 50000, final_amount: 450000 });
+      42 |   });
+      43 |
+
+      at Object.toBe (tests/api/coupons.test.js:40:29)
+
+  ● API: coupon conditions and formulas (FR-09) › A-COUPON-07 rejects an anonymous request even with user_id (C4)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      13 | }
+      14 | function expectClientError(response) {
+    > 15 |   expect(response.status).toBeGreaterThanOrEqual(400);
+         |                           ^
+      16 |   expect(response.status).toBeLessThan(500);
+      17 |   expect(response.body.error).toEqual(expect.any(String));
+      18 | }
+
+      at toBeGreaterThanOrEqual (tests/api/coupons.test.js:15:27)
+      at Object.expectClientError (tests/api/coupons.test.js:51:5)
+
+  ● API: coupon conditions and formulas (FR-09) › A-COUPON-09 computes ten percent of the total
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "discount_amount": 50000,
+    -   "final_amount": 450000,
+    +   "discount_amount": -4500000,
+    +   "final_amount": 5000000,
+      }
+
+      61 |     const response = await apply('SAVE10', 500000);
+      62 |     expect(response.status).toBe(200);
+    > 63 |     expect(response.body).toMatchObject({ discount_amount: 50000, final_amount: 450000 });
+         |                           ^
+      64 |   });
+      65 | });
+      66 |
+
+      at Object.toMatchObject (tests/api/coupons.test.js:63:27)
+
+
+Test Suites: 3 failed, 2 passed, 5 total
+Tests:       10 failed, 26 passed, 36 total
+Snapshots:   0 total
+Time:        4.972 s
+Ran all test suites.
+Test results written to: <temporary-report>
+EXIT CODE: 1
+
+> backend@1.0.0 test:unit
+> jest --runInBand tests/unit
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.934 s, estimated 1 s
+Ran all test suites matching tests/unit.
+COMMAND: npm run test:unit; EXIT CODE: 0
+COMMAND: npm run test:smoke
+
+> backend@1.0.0 test:smoke
+> jest --runInBand tests/smoke
+
+  console.log
+    Database initialized and seeded (Phase 2).
+
+      at Database.log (database.js:113:17)
+
+  console.log
+    Connected to database
+
+      at Database.log (database.js:9:17)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.188 s
+Ran all test suites matching tests/smoke.
+EXIT CODE: 0
+COMMAND: npm run test:api (summary; full assertions captured in the complete run above)
+
+      at Object.toBeGreaterThanOrEqual (tests/api/catalog-auth.test.js:69:29)
+
+Test Suites: 3 failed, 3 total
+Tests:       10 failed, 20 passed, 30 total
+Snapshots:   0 total
+Time:        3.106 s, estimated 5 s
+Ran all test suites matching tests/api.
+EXIT CODE: 1
+
+Harness checks: Jest detectOpenHandles reported 0 open handles.
+Production startup regression check: node server.js started successfully in the disposable B-01 copy; session stopped with Ctrl+C.
+Original backend/database.sqlite matched its tracked Git blob after all test runs.

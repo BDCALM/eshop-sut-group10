@@ -1,0 +1,84 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  quality:
+    name: Backend quality gates
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Record runtime
+        run: |
+          node --version
+          npm --version
+          printf 'Commit SHA: %s\n' "${GITHUB_SHA}"
+          printf 'Runner OS: %s\n' "${RUNNER_OS}"
+
+      - name: Install dependencies
+        env:
+          npm_config_build_from_source: "true"
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build and syntax check
+        run: npm run build
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: API tests
+        run: npm run test:api
+
+      - name: Smoke tests
+        run: npm run test:smoke
+
+      - name: Generate coverage and Jest report
+        if: ${{ !cancelled() }}
+        run: |
+          mkdir -p test-results
+          npm run test:ci -- \
+            --json \
+            --outputFile=test-results/jest-report.json
+
+      - name: Upload coverage and test report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-ci-reports-${{ github.run_id }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            backend/coverage/cobertura-coverage.xml
+            backend/coverage/coverage-summary.json
+            backend/test-results/jest-report.json

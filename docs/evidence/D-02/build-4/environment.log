@@ -1,0 +1,9 @@
+branch: cicd/jenkins
+commit: a559c53acb9a3b03cc05fca8a855bcc59c8eaae8
+build:  jenkins-eshop-ci-cicd%2Fjenkins-4
+node:   v24.14.0
+npm:    11.9.0
+git:    git version 2.47.3
+os:     Debian GNU/Linux 13 (trixie)
+kernel: Linux 6.6.87.2-microsoft-standard-WSL2 x86_64
+npm cache: /home/jenkins/.npm

@@ -1,0 +1,58 @@
+# D-01 evidence - restart
+Collected: 2026-10-16 11:42:15 +07:00
+Repo commit: 9c084c7086fad706c3144b688da752a84f8666ce
+Branch: cicd/jenkins
+
+## Before restart
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml ps
+NAME                    IMAGE                                                                                                   COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+eshop-ci-agent-1        eshop-jenkins-agent:node24.14.0                                                                         "/usr/local/bin/jenkΓÇª"   agent        11 minutes ago   Up 11 minutes             
+eshop-ci-controller-1   jenkins/jenkins:2.580.1-jdk21@sha256:a660310e39ade10631f774bacd5219de767dfd08947ea5c32a739b5e5bb382c1   "/usr/bin/tini -- /uΓÇª"   controller   34 minutes ago   Up 34 minutes (healthy)   127.0.0.1:8080->8080/tcp
+exit code: 0
+
+## Stop all services
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml stop
+ Container eshop-ci-agent-1 Stopping 
+ Container eshop-ci-agent-1 Stopped 
+ Container eshop-ci-controller-1 Stopping 
+ Container eshop-ci-controller-1 Stopped 
+exit code: 0
+
+## Start all services
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml up -d
+time="2026-10-16T11:42:17+07:00" level=warning msg="volume \"eshop-ci_npm-cache\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+ Container eshop-ci-controller-1 Starting 
+ Container eshop-ci-controller-1 Started 
+ Container eshop-ci-controller-1 Waiting 
+ Container eshop-ci-controller-1 Healthy 
+ Container eshop-ci-agent-1 Starting 
+ Container eshop-ci-agent-1 Started 
+exit code: 0
+
+Agent reconnected after restart: True (within 17s, limit 180s)
+
+## After restart
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml ps
+NAME                    IMAGE                                                                                                   COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+eshop-ci-agent-1        eshop-jenkins-agent:node24.14.0                                                                         "/usr/local/bin/jenkΓÇª"   agent        11 minutes ago   Up 5 seconds              
+eshop-ci-controller-1   jenkins/jenkins:2.580.1-jdk21@sha256:a660310e39ade10631f774bacd5219de767dfd08947ea5c32a739b5e5bb382c1   "/usr/bin/tini -- /uΓÇª"   controller   35 minutes ago   Up 16 seconds (healthy)   127.0.0.1:8080->8080/tcp
+exit code: 0
+
+## Agent log after restart (last 15 lines)
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml logs --no-color --tail 15 agent
+agent-1  | INFO: Connected
+agent-1  | Oct 16, 2026 4:42:28 AM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+agent-1  | INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+agent-1  | Oct 16, 2026 4:42:28 AM org.jenkinsci.remoting.engine.WorkDirManager setupLogging
+agent-1  | INFO: Both error and output logs will be printed to /home/jenkins/agent/remoting
+agent-1  | Oct 16, 2026 4:42:28 AM hudson.remoting.Launcher createEngine
+agent-1  | INFO: Setting up agent: eshop-agent
+agent-1  | Oct 16, 2026 4:42:28 AM hudson.remoting.Engine startEngine
+agent-1  | INFO: Using Remoting version: 3391.va_37fa_a_305d6d
+agent-1  | Oct 16, 2026 4:42:28 AM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+agent-1  | INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+agent-1  | Oct 16, 2026 4:42:29 AM hudson.remoting.Launcher$CuiListener status
+agent-1  | INFO: WebSocket connection open
+agent-1  | Oct 16, 2026 4:42:29 AM hudson.remoting.Launcher$CuiListener status
+agent-1  | INFO: Connected
+exit code: 0

@@ -13,12 +13,20 @@
     "test:harness": "jest --runInBand tests/harness",
     "test:isolation": "node scripts/verify-isolation.cjs",
     "test:coverage": "jest --runInBand --coverage",
-    "test:ci": "jest --ci --runInBand --coverage"
+    "test:ci": "jest --ci --runInBand --coverage --reporters=default --reporters=jest-junit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "jest-junit": {
+    "outputDirectory": "<rootDir>/test-results",
+    "outputName": "junit.xml",
+    "suiteNameTemplate": "{filename}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}",
+    "reportTestSuiteErrors": "true"
+  },
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
@@ -30,6 +38,7 @@
     "@eslint/js": "^10.0.1",
     "eslint": "^10.12.0",
     "jest": "^30.5.2",
+    "jest-junit": "17.0.0",
     "supertest": "^7.3.1"
   }
 }

@@ -1,0 +1,19 @@
+name: eshop-ci
+
+services:
+  controller:
+    image: jenkins/jenkins:2.580.1-jdk21@sha256:a660310e39ade10631f774bacd5219de767dfd08947ea5c32a739b5e5bb382c1
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${JENKINS_PORT:-8080}:8080"
+    volumes:
+      - jenkins-home:/var/jenkins_home
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/login"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+volumes:
+  jenkins-home:

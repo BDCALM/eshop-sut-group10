@@ -1,0 +1,23 @@
+# D-01 evidence - agent connection
+Collected: 2026-10-16 11:37:24 +07:00
+Host OS: Microsoft Windows NT 10.0.26200.0
+Repo commit: 9c084c7086fad706c3144b688da752a84f8666ce
+Branch: cicd/jenkins
+
+## Agent container log (last 40 lines)
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml logs --no-color --tail 40 agent
+agent-1  | Oct 16, 2026 4:31:10 AM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+agent-1  | INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+agent-1  | Oct 16, 2026 4:31:10 AM org.jenkinsci.remoting.engine.WorkDirManager setupLogging
+agent-1  | INFO: Both error and output logs will be printed to /home/jenkins/agent/remoting
+agent-1  | Oct 16, 2026 4:31:10 AM hudson.remoting.Launcher createEngine
+agent-1  | INFO: Setting up agent: eshop-agent
+agent-1  | Oct 16, 2026 4:31:10 AM hudson.remoting.Engine startEngine
+agent-1  | INFO: Using Remoting version: 3391.va_37fa_a_305d6d
+agent-1  | Oct 16, 2026 4:31:10 AM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+agent-1  | INFO: Using /home/jenkins/agent/remoting as a remoting work directory
+agent-1  | Oct 16, 2026 4:31:11 AM hudson.remoting.Launcher$CuiListener status
+agent-1  | INFO: WebSocket connection open
+agent-1  | Oct 16, 2026 4:31:11 AM hudson.remoting.Launcher$CuiListener status
+agent-1  | INFO: Connected
+exit code: 0

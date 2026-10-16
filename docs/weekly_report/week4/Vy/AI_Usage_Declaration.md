@@ -1,7 +1,7 @@
 # BÁO CÁO TUYÊN BỐ SỬ DỤNG AI (AI USAGE DECLARATION)
 
 - **Môn học:** Kiểm thử phần mềm (Software Testing)
-- **Tuần báo cáo:** Tuần 1 (Week 1)
+- **Tuần báo cáo:** Tuần 4 (Week 4)
 - **Họ và tên sinh viên:** Trần Quốc Vỹ
 - **Mã số sinh viên (MSSV):** 23120410
 - **Nhóm / Đề tài:** Nhóm 10 — T07: CI/CD & Test-Harness Engineering

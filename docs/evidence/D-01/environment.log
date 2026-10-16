@@ -1,0 +1,102 @@
+# D-01 evidence - environment
+Collected: 2026-10-16 11:37:20 +07:00
+Host OS: Microsoft Windows NT 10.0.26200.0
+Repo commit: 9c084c7086fad706c3144b688da752a84f8666ce
+Branch: cicd/jenkins
+
+## Docker client/engine
+> docker version
+Client:
+ Version:           29.2.1
+ API version:       1.53
+ Go version:        go1.25.6
+ Git commit:        a5c7197
+ Built:             Mon Feb  2 17:20:16 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.65.0 (221669)
+ Engine:
+  Version:          29.2.1
+  API version:      1.53 (minimum version 1.44)
+  Go version:       go1.25.6
+  Git commit:       6bc6209
+  Built:            Mon Feb  2 17:17:24 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.2.1
+  GitCommit:        dea7da592f5d1d2b7755e3a161be07f43fad8f75
+ runc:
+  Version:          1.3.4
+  GitCommit:        v1.3.4-0-gd6d73eb8
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+exit code: 0
+
+## Compose services
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml ps
+NAME                    IMAGE                                                                                                   COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+eshop-ci-agent-1        eshop-jenkins-agent:node24.14.0                                                                         "/usr/local/bin/jenkΓÇª"   agent        6 minutes ago    Up 6 minutes              
+eshop-ci-controller-1   jenkins/jenkins:2.580.1-jdk21@sha256:a660310e39ade10631f774bacd5219de767dfd08947ea5c32a739b5e5bb382c1   "/usr/bin/tini -- /uΓÇª"   controller   29 minutes ago   Up 29 minutes (healthy)   127.0.0.1:8080->8080/tcp
+exit code: 0
+
+## Controller: Jenkins version (X-Jenkins header)
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T controller sh
+X-Jenkins: 2.580.1
+exit code: 0
+
+## Controller: Java
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T controller java -version
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
+exit code: 0
+
+## Agent: Node
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent node --version
+v24.14.0
+exit code: 0
+
+## Agent: npm
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent npm --version
+11.9.0
+exit code: 0
+
+## Agent: Git
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent git --version
+git version 2.47.3
+exit code: 0
+
+## Agent: Java
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent java -version
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
+exit code: 0
+
+## Agent: OS and glibc
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent sh
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+ldd (Debian GLIBC 2.41-12+deb13u4) 2.41
+exit code: 0
+
+## Agent: user and npm cache path
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent sh
+uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins)
+/home/jenkins/.npm
+exit code: 0
+
+## Agent: write test (workspace + npm cache)
+> docker compose -f infra/jenkins/compose.yaml -f infra/jenkins/compose.agent.yaml exec -T agent sh
+write-ok
+exit code: 0
+
+## Docker volumes of project eshop-ci
+> docker volume ls --filter name=eshop-ci_
+DRIVER    VOLUME NAME
+local     eshop-ci_agent-work
+local     eshop-ci_jenkins-home
+local     eshop-ci_npm-cache
+exit code: 0
